@@ -1,0 +1,21 @@
+---
+- name: Building AWS EC2 Router Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+ 
+  tasks:
+  - name: Creating EC2 Router instance
+    amazon.aws.ec2_instance:
+      name: "{{ name }}"
+      instance_type: "{{ instance_type }}" 
+      image_id: "{{ image_id }}"
+      count: "{{ count }}"
+      key_name: trellis_aap2
+      network:
+        assign_public_ip: "{{ assign_public_ip  }}"
+        subnet_id: "{{ subnet_id }}"
+      vpc_subnet_id: "{{ vpc_subnet_id  }}"
+      security_group: "{{ security_group }}"
+      wait: yes
+      region: "{{ region }}"

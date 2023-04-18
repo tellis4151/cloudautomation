@@ -1,0 +1,19 @@
+---
+- name: Delete EC2 Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+ 
+  tasks:
+  - name: Identifying instance 
+    debug:
+      msg: "Deleting {{ instance_ids  }} from {{ region }}"
+
+  - name: Delete EC2 instance
+    amazon.aws.ec2_instance:
+      instance_ids: "{{ instance_ids }}"
+      instance_type: "{{ instance_type }}"
+      termination_protection: no
+      region: "{{ region  }}"
+      state: terminated
+      wait: yes
