@@ -1,0 +1,115 @@
+---
+- name: Create AWS Instance from XML file
+  hosts: localhost
+  become: true
+  
+  tasks:
+  - name: Convert XML Instance Name
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/name
+      content: text
+    register: name
+
+  - name: Show attribute value
+    debug:
+      var: name
+
+  - name: Convert XML Instance Type
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/instance_type
+      content: text
+    register: instance_type
+
+  - name: Show attribute value
+    debug:
+      var: instance_type
+
+ 
+  - name: Convert XML Image_id
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/image_id
+      content: text
+    register: image_id
+
+  - name: Show attribute value
+    debug:
+      var: image_id
+
+  - name: Convert XML Number of Instances
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/count
+      content: text
+    register: num_instances
+
+  - name: Show attribute value
+    debug:
+      var: num_instances
+
+  - name: Convert XML Public IP
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/assign_public_ip
+      content: text
+    register: assign_public_ip
+
+  - name: Show attribute value
+    debug:
+      var: assign_public_ip
+
+  - name: Convert XML Region
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/region
+      content: text
+    register: region
+
+  - name: Show attribute value
+    debug:
+      var: region
+  
+  - name: Convert XML Volume Name
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/device_name
+      content: text
+    register: device_name
+
+  - name: Show attribute value
+    debug:
+      var: device_name
+
+
+  - name: Convert XML Volume Size
+    xml: 
+      path: /etc/ansible/files/emof_v2.xml
+      xpath: /Instance/volume_size
+      content: text
+    register: volume_size
+
+  - name: Show attribute value
+    debug:
+      var: volume_size
+
+  - name: Create EC2 instance
+    amazon.aws.ec2_instance:
+      name: "{{ name }}"
+      instance_type: "{{ instance_type }}" 
+      image_id: "{{ image_id  }}"
+      count: "{{ count }}"
+      key_name: trellis_aap2
+      network:
+        assign_public_ip: "{{ assign_public_ip  }}"
+        subnet_id: subnet-0323549ff78f73ee0
+      vpc_subnet_id: subnet-0323549ff78f73ee0
+      security_group: sg-038af1904983955b1
+      wait: yes
+      region: "{{ region }}"
+      volumes:
+        - device_name: "{{ device_name }}"
+          ebs:
+            volume_size: "{{ volume_size }}"
+            delete_on_termination: true
