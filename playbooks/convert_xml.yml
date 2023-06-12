@@ -26,7 +26,6 @@
     debug:
       var: instance_type
 
- 
   - name: Convert XML Image_id
     xml: 
       path: /etc/ansible/files/emof_v2.xml
@@ -81,7 +80,6 @@
   - name: Show attribute value
     debug:
       var: device_name
-
 
   - name: Convert XML Volume Size
     xml: 
