@@ -46,8 +46,14 @@
 
   - name: Show attribute value
     debug:
-      var: image_id
+      var: image_id.matches
 
+  - name: Write to vars file
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: "{{ image_id.matches }}"
+      insertafter: EOF
+  
   - name: Convert XML Number of Instances
     xml: 
       path: /var/lib/awx/projects/playbooks/emof_v2.xml
@@ -57,7 +63,13 @@
 
   - name: Show attribute value
     debug:
-      var: num_instances
+      var: num_instances.matches
+
+  - name: Write to vars file
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: "{{ num_instances.matches }}"
+      insertafter: EOF
 
   - name: Convert XML Public IP
     xml: 
@@ -68,7 +80,13 @@
 
   - name: Show attribute value
     debug:
-      var: assign_public_ip
+      var: assign_public_ip.matches
+
+  - name: Write to vars file
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: "{{ assign_public_ip.matches }}"
+      insertafter: EOF
 
   - name: Convert XML Region
     xml: 
@@ -79,8 +97,14 @@
 
   - name: Show attribute value
     debug:
-      var: region
+      var: region.matches
   
+  - name: Write to vars file
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: "{{ region.matches }}"
+      insertafter: EOF
+
   - name: Convert XML Volume Name
     xml: 
       path: /var/lib/awx/projects/playbooks/emof_v2.xml
@@ -90,7 +114,13 @@
 
   - name: Show attribute value
     debug:
-      var: device_name
+      var: device_name.matches
+
+  - name: Write to vars file
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: "{{ device_name.matches }}"
+      insertafter: EOF
 
   - name: Convert XML Volume Size
     xml: 
@@ -101,7 +131,13 @@
 
   - name: Show attribute value
     debug:
-      var: volume_size
+      var: volume_size.matches
+
+  - name: Write to vars file
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: "{{ volume_size.matches }}"
+      insertafter: EOF
 
 #  - name: Create EC2 instance
 #    amazon.aws.ec2_instance:
