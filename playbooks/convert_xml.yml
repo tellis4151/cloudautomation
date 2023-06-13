@@ -32,9 +32,10 @@
       var: instance_type.matches
 
   - name: Write to vars file
-    copy:
-      content: "{{ instance_type.matches }}"
-      dest: "/var/lib/awx/projects/playbooks/bae.yml"
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: ""{{ instance_type.matches }}
+      insertafter: EOF
 
   - name: Convert XML Image_id
     xml: 
