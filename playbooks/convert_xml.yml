@@ -105,7 +105,7 @@
       vpc_subnet_id: subnet-0323549ff78f73ee0
       security_group: sg-038af1904983955b1
       wait: yes
-      region: "{{ region }}"
+      region: us-east-1
       volumes:
         - device_name: "{{ device_name }}"
           ebs:
