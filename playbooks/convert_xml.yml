@@ -4,6 +4,14 @@
   become: true
   
   tasks:
+  - name: Creating blank variable document
+    copy:
+      src: /var/lib/awx/projects/playbooks/bae_new.yml
+      dest: /var/lib/awx/projects/playbooks/bae.yml
+      owner: awx
+      group: awx
+      mode: '0644' 
+
   - name: Convert XML Instance Name
     xml: 
       path: /var/lib/awx/projects/playbooks/emof_v2.xml
