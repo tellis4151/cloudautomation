@@ -16,9 +16,10 @@
       var: name.matches
 
   - name: Write to vars file
-    copy:
-      content: "{{ name.matches }}"
-      dest: "/var/lib/awx/projects/playbooks/bae.yml"
+    lineinfile:
+      path: "/var/lib/awx/projects/playbooks/bae.yml"
+      line: "{{ name.matches }}"
+      insertafter: EOF
 
   - name: Convert XML Instance Type
     xml: 
@@ -138,6 +139,10 @@
       path: "/var/lib/awx/projects/playbooks/bae.yml"
       line: "{{ volume_size.matches }}"
       insertafter: EOF
+
+  - name: Creating variables file
+    command:
+      cmd: /var/lib/awx/projects/playbooks/convert.sh
 
 #  - name: Create EC2 instance
 #    amazon.aws.ec2_instance:
