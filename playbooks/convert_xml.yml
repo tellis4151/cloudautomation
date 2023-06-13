@@ -107,7 +107,7 @@
       wait: yes
       region: us-east-1
       volumes:
-        - device_name: "{{ device_name }}"
+        - device_name: /dev/sda1
           ebs:
             volume_size: 40
             delete_on_termination: true
