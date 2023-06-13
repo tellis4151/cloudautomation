@@ -2,6 +2,8 @@
 - name: Create AWS Instance from XML file
   hosts: localhost
   become: true
+  var_files:
+    - /var/lib/awx/projects/playbooks/bae.yml
   
   tasks:
   - name: Convert XML Instance Name
@@ -144,22 +146,22 @@
     command:
       cmd: /var/lib/awx/projects/playbooks/convert.sh
 
-#  - name: Create EC2 instance
-#    amazon.aws.ec2_instance:
-#      name: "{{ name }}"
-#      instance_type: "{{ instance_type }}" 
-#      image_id: "{{ image_id  }}"
-#      count: 1
-#      key_name: trellis_aap2
-#      network:
-#        assign_public_ip: "{{ assign_public_ip  }}"
-#        subnet_id: subnet-0323549ff78f73ee0
-#      vpc_subnet_id: subnet-0323549ff78f73ee0
-#      security_group: sg-038af1904983955b1
-#      wait: yes
-#      region: us-east-1
-#      volumes:
-#        - device_name: /dev/sda1
-#          ebs:
-#            volume_size: 40
-#            delete_on_termination: true
+  - name: Create EC2 instance
+    amazon.aws.ec2_instance:
+      name: "{{ name }}"
+      instance_type: "{{ instance_type }}" 
+      image_id: "{{ image_id  }}"
+      count: "{{ num_instances }}"
+      key_name: trellis_aap2
+      network:
+        assign_public_ip: "{{ assign_public_ip  }}"
+        subnet_id: subnet-0323549ff78f73ee0
+      vpc_subnet_id: subnet-0323549ff78f73ee0
+      security_group: sg-038af1904983955b1
+      wait: yes
+      region: "{{ region }}"
+      volumes:
+        - device_name: "{{ device_name }}"
+          ebs:
+            volume_size: "{{ volume_size }}
+            delete_on_termination: true
