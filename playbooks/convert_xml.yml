@@ -42,11 +42,11 @@
       path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/count
       content: text
-    register: num_instances
+    register: count
 
   - name: Show attribute value
     debug:
-      var: num_instances
+      var: count
 
   - name: Convert XML Public IP
     xml: 
