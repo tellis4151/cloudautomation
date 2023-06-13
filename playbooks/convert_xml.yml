@@ -40,13 +40,13 @@
   - name: Convert XML Number of Instances
     xml: 
       path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/count
+      xpath: /Instance/num_instances
       content: text
-    register: count
+    register: num_instances
 
   - name: Show attribute value
     debug:
-      var: count
+      var: num_instances
 
   - name: Convert XML Public IP
     xml: 
@@ -97,7 +97,7 @@
       name: "{{ name }}"
       instance_type: "{{ instance_type }}" 
       image_id: "{{ image_id  }}"
-      count: "{{ count }}"
+      count: "{{ num_instances }}"
       key_name: trellis_aap2
       network:
         assign_public_ip: "{{ assign_public_ip  }}"
