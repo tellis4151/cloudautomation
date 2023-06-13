@@ -15,6 +15,11 @@
     debug:
       var: name
 
+  - name: Write to vars file
+    copy:
+      content: "{{ name }}"
+      dest: "/var/lib/awx/projects/playbooks/bae.yml"
+
   - name: Convert XML Instance Type
     xml: 
       path: /var/lib/awx/projects/playbooks/emof_v2.xml
@@ -25,6 +30,11 @@
   - name: Show attribute value
     debug:
       var: instance_type
+
+  - name: Write to vars file
+    copy:
+      content: "{{ instance_type }}"
+      dest: "/var/lib/awx/projects/playbooks/bae.yml"
 
   - name: Convert XML Image_id
     xml: 
