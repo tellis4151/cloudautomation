@@ -13,11 +13,11 @@
 
   - name: Show attribute value
     debug:
-      var: name
+      var: name.matches
 
   - name: Write to vars file
     copy:
-      content: "{{ name }}"
+      content: "{{ name.matches }}"
       dest: "/var/lib/awx/projects/playbooks/bae.yml"
 
   - name: Convert XML Instance Type
