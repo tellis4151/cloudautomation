@@ -29,11 +29,11 @@
 
   - name: Show attribute value
     debug:
-      var: instance_type
+      var: instance_type.matches
 
   - name: Write to vars file
     copy:
-      content: "{{ instance_type }}"
+      content: "{{ instance_type.matches }}"
       dest: "/var/lib/awx/projects/playbooks/bae.yml"
 
   - name: Convert XML Image_id
