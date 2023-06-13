@@ -6,7 +6,7 @@
   tasks:
   - name: Convert XML Instance Name
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/name
       content: text
     register: name
@@ -17,7 +17,7 @@
 
   - name: Convert XML Instance Type
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/instance_type
       content: text
     register: instance_type
@@ -28,7 +28,7 @@
 
   - name: Convert XML Image_id
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/image_id
       content: text
     register: image_id
@@ -39,7 +39,7 @@
 
   - name: Convert XML Number of Instances
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/count
       content: text
     register: num_instances
@@ -50,7 +50,7 @@
 
   - name: Convert XML Public IP
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/assign_public_ip
       content: text
     register: assign_public_ip
@@ -61,7 +61,7 @@
 
   - name: Convert XML Region
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/region
       content: text
     register: region
@@ -72,7 +72,7 @@
   
   - name: Convert XML Volume Name
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/device_name
       content: text
     register: device_name
@@ -83,7 +83,7 @@
 
   - name: Convert XML Volume Size
     xml: 
-      path: /var/lib/awx/projects/files/emof_v2.xml
+      path: /var/lib/awx/projects/playbooks/emof_v2.xml
       xpath: /Instance/volume_size
       content: text
     register: volume_size
