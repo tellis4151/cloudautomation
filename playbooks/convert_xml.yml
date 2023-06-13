@@ -1,15 +1,12 @@
 ---
 - name: Create AWS Instance from XML file
   hosts: localhost
-  become: true
   
   tasks:
   - name: Creating blank variable document
     copy:
       src: /var/lib/awx/projects/playbooks/bae_new.yml
       dest: /var/lib/awx/projects/playbooks/bae.yml
-      uid: 497
-      gid: 497
       mode: '0644' 
 
   - name: Convert XML Instance Name
