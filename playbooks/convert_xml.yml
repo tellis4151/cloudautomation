@@ -109,5 +109,5 @@
       volumes:
         - device_name: "{{ device_name }}"
           ebs:
-            volume_size: "{{ volume_size }}"
+            volume_size: 40
             delete_on_termination: true
