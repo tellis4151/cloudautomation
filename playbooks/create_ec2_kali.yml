@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars_files:
-    - /var/lib/awx/project/playbooks/bae.yml
+    - /var/lib/awx/projects/playbooks/bae.yml
  
   tasks:
   - name: Create EC2 instance
