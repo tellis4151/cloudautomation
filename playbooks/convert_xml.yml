@@ -2,7 +2,7 @@
 - name: Create AWS Instance from XML file
   hosts: localhost
   become: true
-  var_files:
+  vars_files:
     - /var/lib/awx/projects/playbooks/bae.yml
   
   tasks:
