@@ -7,7 +7,7 @@
   - name: Taking snapshot prior to updating
     amazon.aws.ec2_snapshot:
       instance_id: "{{ instance_id }}"
-      volume_id: "{{ volume_id }}"
+      device_name: "{{ device_name }}"
       description: snapshot before software update
       snapshot_tags:
         source: /data
