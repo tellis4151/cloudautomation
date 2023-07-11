@@ -11,6 +11,7 @@
       instance_id: "{{ instance_id }}"
       device_name: "{{ device_name }}"
       description: snapshot before software update
+      region: us-east-1
       snapshot_tags:
         source: /data
         name: edge_node_1
