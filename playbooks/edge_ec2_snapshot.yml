@@ -6,7 +6,7 @@
   tasks:
   - name: Taking snapshot prior to updating
     amazon.aws.ec2_snapshot:
-      isntance_id: "{{ instance_id }}"
+      instance_id: "{{ instance_id }}"
       volume_id: "{{ volume_id }}"
       description: snapshot before software update
       snapshot_tags:
