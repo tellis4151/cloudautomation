@@ -8,8 +8,7 @@
   - name: Start EC2 Instance
     amazon.aws.ec2_instance:
       region: us-east-1
-      volumes:
-        - device_name: /dev/sdf
       instance_ids: "{{ instance_ids }}"
       state: started
+      wait: false
     
