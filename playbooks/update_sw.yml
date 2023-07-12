@@ -1,0 +1,10 @@
+---
+- name: Updating Software Package
+  hosts: edge
+  gather_facts: false
+  become: true
+
+  tasks:
+  - name: Update Softwar
+    shell: 
+      cmd: /home/rocky/update_package.sh
