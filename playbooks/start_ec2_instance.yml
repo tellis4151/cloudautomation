@@ -1,0 +1,13 @@
+---
+- name: Stop EC2 Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+  - name: Stop EC2 Instance
+    amazon.aws.ec2_instance:
+      region: us-east-1
+      instance_ids: "{{ instance_ids }}"
+      state: started
+    
