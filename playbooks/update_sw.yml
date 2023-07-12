@@ -7,4 +7,4 @@
   tasks:
   - name: Update Software
     shell: 
-      cmd: dnf -y install sysstat
+      cmd: sudo dnf -y install sysstat
