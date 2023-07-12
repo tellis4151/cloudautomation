@@ -1,0 +1,14 @@
+---
+- name: Stop EC2 Instance
+  hosts: edge
+  gather_facts: false
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+  - name: Stop EC2 Instance
+    amazon.aws.ec2_instance:
+      region: us-east-1
+      instance_ids: "{{ instance_ids }}"
+      state: stopped
+    

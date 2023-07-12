@@ -1,0 +1,33 @@
+---
+- name: Revert Edge Node to Stable State
+  hosts: edge
+  gather_facts: false
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+  - name: Detach Volume
+    amazon.aws.ec2_vol:
+      id: "{{ volume_id }}"
+      region: us-east-1
+      instance: None
+      register: detach_vol
+
+  - name: Creating Volume from snapshot
+    amazon.aws.ec2_vol:
+      snapshot: "{{ snapshot_id }}"
+      region: us-east-1
+      volume_size: 40
+      instance: "{{ instance_id }}"
+      register: ec2_vol
+      tags: attach
+
+  - name: Attach the created Volume from snapshot to an instance
+    amazon.aws.ec2_vol:
+      region: us-east-1
+      instance: "{{ instance_id }}"
+      id: "{{ ec2_vol.volume_id }}"
+      device_name: /dev/sda1
+      delete_on_termination: true
+      
