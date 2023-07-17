@@ -7,4 +7,4 @@
   tasks:
   - name: Update Software
     shell: 
-      cmd: /home/rocky/firmware1.sh
+      cmd: /home/rocky/firmware.sh
