@@ -1,0 +1,11 @@
+---
+- name: Install Apache
+  hosts: appservers
+  gather_facts: true
+  become: true
+
+  tasks:
+  - name: Install Apache
+    dnf:
+      name: httpd
+      state: latest
