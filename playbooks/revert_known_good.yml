@@ -1,6 +1,6 @@
 ---
 - name: Revert Edge Node to Stable State
-  hosts: edge
+  hosts: localhost
   gather_facts: false
   become: true
   vars:

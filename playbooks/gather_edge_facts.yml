@@ -1,5 +1,6 @@
 ---
 - name: Gather Edge Node Facts
+  tags: facts
   hosts: edge
 
   tasks:

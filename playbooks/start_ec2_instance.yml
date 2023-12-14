@@ -1,5 +1,6 @@
 ---
 - name: Start EC2 Instance
+  tags: start_ec2
   hosts: localhost
   connection: local
   gather_facts: false

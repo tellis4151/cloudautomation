@@ -1,6 +1,7 @@
 ---
 - name: Updating Software Package
   hosts: edge
+  tags: update
   gather_facts: false
   become: true
 
@@ -8,3 +9,5 @@
   - name: Update Software
     shell: 
       cmd: /home/rocky/firmware.sh
+
+  
