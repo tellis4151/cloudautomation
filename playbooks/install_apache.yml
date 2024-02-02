@@ -5,7 +5,7 @@
   become: true
 
   tasks:
-  - name: Install Apache
-    dnf:
-      name: httpd
-      state: latest
+    - name: Install Apache
+      dnf:
+        name: httpd
+        state: latest
