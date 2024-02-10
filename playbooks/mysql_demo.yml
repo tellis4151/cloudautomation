@@ -2,6 +2,8 @@
 - name: Setup Mysql
   hosts: db_servers
   become: True
+  vars:
+    ansible_python_intrepreter: /usr/bin/python3
 
   tasks:
   - name: Install mysql on database servers
