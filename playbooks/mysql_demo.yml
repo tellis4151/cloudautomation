@@ -3,7 +3,7 @@
   hosts: db_servers
   become: True
   vars:
-    ansible_python_intrepreter: /usr/bin/python3
+    ansible_python_intrepreter: /usr/bin/python3.6
 
   tasks:
   - name: Install mysql on database servers
