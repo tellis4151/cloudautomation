@@ -1,150 +1,150 @@
 ---
 - name: Create AWS Instance from XML file
   hosts: localhost
-  
+
   tasks:
-  - name: Creating blank variable document
-    copy:
-      src: /var/lib/awx/projects/playbooks/bae_new.yml
-      dest: /var/lib/awx/projects/playbooks/bae.yml
-      mode: '0644' 
+    - name: Creating blank variable document
+      copy:
+        src: /var/lib/awx/projects/playbooks/bae_new.yml
+        dest: /var/lib/awx/projects/playbooks/bae.yml
+        mode: "0644"
 
-  - name: Convert XML Instance Name
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/name
-      content: text
-    register: name
+    - name: Convert XML Instance Name
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/name
+        content: text
+      register: name
 
-  - name: Show attribute value
-    debug:
-      var: name.matches
+    - name: Show attribute value
+      debug:
+        var: name.matches
 
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ name.matches }}"
-      insertafter: EOF
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ name.matches }}"
+        insertafter: EOF
 
-  - name: Convert XML Instance Type
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/instance_type
-      content: text
-    register: instance_type
+    - name: Convert XML Instance Type
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/instance_type
+        content: text
+      register: instance_type
 
-  - name: Show attribute value
-    debug:
-      var: instance_type.matches
+    - name: Show attribute value
+      debug:
+        var: instance_type.matches
 
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ instance_type.matches }}"
-      insertafter: EOF
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ instance_type.matches }}"
+        insertafter: EOF
 
-  - name: Convert XML Image_id
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/image_id
-      content: text
-    register: image_id
+    - name: Convert XML Image_id
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/image_id
+        content: text
+      register: image_id
 
-  - name: Show attribute value
-    debug:
-      var: image_id.matches
+    - name: Show attribute value
+      debug:
+        var: image_id.matches
 
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ image_id.matches }}"
-      insertafter: EOF
-  
-  - name: Convert XML Number of Instances
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/num_instances
-      content: text
-    register: num_instances
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ image_id.matches }}"
+        insertafter: EOF
 
-  - name: Show attribute value
-    debug:
-      var: num_instances.matches
+    - name: Convert XML Number of Instances
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/num_instances
+        content: text
+      register: num_instances
 
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ num_instances.matches }}"
-      insertafter: EOF
+    - name: Show attribute value
+      debug:
+        var: num_instances.matches
 
-  - name: Convert XML Public IP
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/assign_public_ip
-      content: text
-    register: assign_public_ip
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ num_instances.matches }}"
+        insertafter: EOF
 
-  - name: Show attribute value
-    debug:
-      var: assign_public_ip.matches
+    - name: Convert XML Public IP
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/assign_public_ip
+        content: text
+      register: assign_public_ip
 
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ assign_public_ip.matches }}"
-      insertafter: EOF
+    - name: Show attribute value
+      debug:
+        var: assign_public_ip.matches
 
-  - name: Convert XML Region
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/region
-      content: text
-    register: region
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ assign_public_ip.matches }}"
+        insertafter: EOF
 
-  - name: Show attribute value
-    debug:
-      var: region.matches
-  
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ region.matches }}"
-      insertafter: EOF
+    - name: Convert XML Region
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/region
+        content: text
+      register: region
 
-  - name: Convert XML Volume Name
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/device_name
-      content: text
-    register: device_name
+    - name: Show attribute value
+      debug:
+        var: region.matches
 
-  - name: Show attribute value
-    debug:
-      var: device_name.matches
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ region.matches }}"
+        insertafter: EOF
 
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ device_name.matches }}"
-      insertafter: EOF
+    - name: Convert XML Volume Name
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/device_name
+        content: text
+      register: device_name
 
-  - name: Convert XML Volume Size
-    xml: 
-      path: /var/lib/awx/projects/playbooks/emof_v2.xml
-      xpath: /Instance/volume_size
-      content: text
-    register: volume_size
+    - name: Show attribute value
+      debug:
+        var: device_name.matches
 
-  - name: Show attribute value
-    debug:
-      var: volume_size.matches
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ device_name.matches }}"
+        insertafter: EOF
 
-  - name: Write to vars file
-    lineinfile:
-      path: "/var/lib/awx/projects/playbooks/bae.yml"
-      line: "{{ volume_size.matches }}"
-      insertafter: EOF
+    - name: Convert XML Volume Size
+      xml:
+        path: /var/lib/awx/projects/playbooks/emof_v2.xml
+        xpath: /Instance/volume_size
+        content: text
+      register: volume_size
 
-  - name: Creating variables file
-    command:
-      cmd: /var/lib/awx/projects/playbooks/convert.sh
+    - name: Show attribute value
+      debug:
+        var: volume_size.matches
+
+    - name: Write to vars file
+      lineinfile:
+        path: /var/lib/awx/projects/playbooks/bae.yml
+        line: "{{ volume_size.matches }}"
+        insertafter: EOF
+
+    - name: Creating variables file
+      command:
+        cmd: /var/lib/awx/projects/playbooks/convert.sh
