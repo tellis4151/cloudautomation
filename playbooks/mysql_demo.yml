@@ -2,8 +2,6 @@
 - name: Setup Mysql
   hosts: db_servers
   become: True
-  vars:
-    ansible_python_intrepreter: /usr/bin/python3.6
 
   tasks:
   - name: Install mysql on database servers
@@ -16,6 +14,12 @@
       name: mysqld
       state: started
       enabled: true
+  
+  - name: Install pymysql
+    ansible.builtin.pip:
+      name: pymysql
+      state: present
+      executable: pip3
   
   - name: Create lightspeed database
     community.mysql.mysql_db:
