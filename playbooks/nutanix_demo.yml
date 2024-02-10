@@ -1,0 +1,14 @@
+---
+- name: Creating Nutanix Cloud Resources
+  hosts: cloud
+  become: true
+
+  tasks:
+    # Create VPC with dns_servers & List VPC's
+    
+    # Create VM & Create OVA Image
+    
+    
+
+
+    
