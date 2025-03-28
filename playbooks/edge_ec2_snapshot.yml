@@ -12,8 +12,8 @@
       device_name: "{{ device_name }}"
       description: snapshot - before update
       region: us-east-1
-      access_key: "{{ access_key }}"
-      secret_key: "{{ secret_key }}"
+#      access_key: "{{ access_key }}"
+#      secret_key: "{{ secret_key }}"
       snapshot_tags:
         source: /data
         name: edge_node_1
