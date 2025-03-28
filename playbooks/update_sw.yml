@@ -6,12 +6,10 @@
   become: true
 
   tasks:
-  - name: Update Software
-    dnf: 
-      name:
-        - httpd
-        - git
-        - mysql
-      state: latest
-
-  
+    - name: Update Software
+      ansible.builtin.dnf:
+        name:
+          - httpd
+          - git
+          - mysql
+        state: latest
