@@ -6,15 +6,15 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-  - name: Taking snapshot prior to updating
-    amazon.aws.ec2_snapshot:
-      instance_id: "{{ instance_id }}"
-      device_name: "{{ device_name }}"
-      description: snapshot - before update
-      region: us-east-1
-      access_key: "{{ access_key }}"
-      secret_key: "{{ secret_key }}"
-      wait: false
-      snapshot_tags:
-        source: /data
-        name: edge_node_1
+    - name: Taking snapshot prior to updating
+      amazon.aws.ec2_snapshot:
+        instance_id: "{{ instance_id }}"
+        device_name: "{{ device_name }}"
+        description: snapshot - before update
+        region: us-east-1
+        access_key: "{{ access_key }}"
+        secret_key: "{{ secret_key }}"
+        wait: false
+        snapshot_tags:
+          source: /data
+          name: edge_node_1
