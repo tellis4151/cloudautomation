@@ -10,7 +10,7 @@
     dnf: 
       name:
         - net-tools
-	- sysstat
+        - sysstat
         - git
       state: latest
 
