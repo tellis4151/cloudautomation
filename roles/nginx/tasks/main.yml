@@ -6,7 +6,7 @@
 
 - name: Add ngnix configuration
   ansible.builtin.copy:
-    src: nginx.conf.j2
+    src: templates/nginx.conf.j2
     dest: /etc/nginx/sites-enabled/default
     mode: '0644'
 
@@ -18,7 +18,7 @@
 
 - name: Copy index.html to Nginx directory
   copy:
-    src: index.html
+    src: files/index.html
     dest: /var/www/html/index.html
 
 - name: Ensure nginx is runnning
