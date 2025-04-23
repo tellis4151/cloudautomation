@@ -1,0 +1,7 @@
+---
+- name: Install and Configure Nginx
+  hosts: webservers
+  become: true
+
+  roles:
+    - name: nginx
