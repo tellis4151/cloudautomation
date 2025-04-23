@@ -13,7 +13,7 @@
 - name: Copy index.html to Nginx directory
   copy:
     src: files/index.html
-    dest: /var/www/html/index.html
+    dest: /usr/share/nginx/html/index.html
 
 - name: Ensure nginx is runnning
   systemd:
