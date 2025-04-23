@@ -8,6 +8,7 @@
   copy:
     src: /usr/share/nginx/html/index.html
     dest: /tmp/index.html.orig
+    remote_src: true
   
 - name: Copy index.html to Nginx directory
   copy:
