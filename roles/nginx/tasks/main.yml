@@ -1,0 +1,28 @@
+---
+- name: Install NGINX
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+
+- name: Add ngnix configuration
+  ansible.builtin.copy:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/default
+    mode: '0644'
+
+- name: Enable website configuration
+  file:
+    src: /etc/nginx/sites-enabled/default
+    dest: /etc/nginx/sites-available/default
+    state: link
+
+- name: Copy index.html to Nginx directory
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html
+
+- name: Ensure nginx is runnning
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
