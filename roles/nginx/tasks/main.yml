@@ -4,18 +4,11 @@
     name: nginx
     state: present
 
-- name: Add ngnix configuration
-  ansible.builtin.copy:
-    src: templates/nginx.conf.j2
-    dest: /etc/nginx/sites-enabled/default
-    mode: '0644'
-
-- name: Enable website configuration
-  file:
-    src: /etc/nginx/sites-enabled/default
-    dest: /etc/nginx/sites-available/default
-    state: link
-
+- name: Backup existing index.html file
+  copy:
+    src: /usr/share/nginx/html/index.html
+    dest: /tmp/index.html.orig
+  
 - name: Copy index.html to Nginx directory
   copy:
     src: files/index.html
