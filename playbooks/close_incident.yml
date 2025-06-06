@@ -17,7 +17,6 @@
   - name: Print out Incident info 
     debug:
       var: result
-      verbosity: 2
 
   - name: Close Incident
     servicenow.itsm.incident:
