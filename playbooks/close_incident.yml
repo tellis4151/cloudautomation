@@ -19,13 +19,13 @@
       var: result
       verbosity: 2
 
-  #- name: Close Incident
-  #  servicenow.itsm.incident:
-  #    instance: 
-  #      host: "{{ host }}"
-  #      username: "{{ username }}"
-  #      password: "{{ password }}"
-  #    state: closed
-  #    number: "{{ result.number }}"
-  #    close_code: "Solved (Permanently)"
-  #    close_notes: "Closed"
+  - name: Close Incident
+    servicenow.itsm.incident:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: closed
+      number: "{{ records.number }}"
+      close_code: "Solved (Permanently)"
+      close_notes: "Closed"
