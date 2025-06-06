@@ -1,0 +1,19 @@
+---
+- name: Create ServiceNow Incident
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Create Order System Incident
+    servicenow.itsm.incident:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: new
+      caller: troy.ellis
+      short_description: Order System Down
+      description: Callers reporting order system is timing out
+      impact: high
+      urgency: high
+      state: in_progress

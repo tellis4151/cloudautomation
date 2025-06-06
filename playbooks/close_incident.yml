@@ -1,0 +1,30 @@
+---
+- name: Create ServiceNow Incident
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Create Order System Incident
+    servicenow.itsm.incident_info:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      query:
+        - short_description: LIKE Order System Down
+    register: result
+
+  - name: Print out Incident info 
+    debug:
+      msg: "{{ result.stdout }}"
+
+  - name: Close Incident
+    servicenow.itsm.incident:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: closed
+      number: "{{ result.number }}"
+      close_code: "Solved (Permanently)"
+      close_notes: "Closed"
