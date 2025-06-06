@@ -10,7 +10,6 @@
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
-      state: new
       caller: troy.ellis
       short_description: Order System Down
       description: Callers reporting order system is timing out
