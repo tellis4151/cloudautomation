@@ -16,7 +16,7 @@
 
   - name: Print out Incident info 
     debug:
-      var: result
+      var: results
 
   - name: Close Incident
     servicenow.itsm.incident:
