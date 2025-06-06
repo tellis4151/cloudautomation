@@ -12,7 +12,7 @@
         password: "{{ password }}"
       query:
         - short_description: LIKE Order System Down
-    register: result
+    register: results
 
   - name: Print out Incident info 
     debug:
@@ -25,6 +25,6 @@
         username: "{{ username }}"
         password: "{{ password }}"
       state: closed
-      number: "{{ result.records.number }}"
+      number: "{{ results.records[0].number }}"
       close_code: "Solved (Permanently)"
       close_notes: "Closed"
