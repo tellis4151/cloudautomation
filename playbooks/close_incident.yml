@@ -16,7 +16,8 @@
 
   - name: Print out Incident info 
     debug:
-      msg: "{{ result.stdout }}"
+      var: result
+      verbosity: 2
 
   #- name: Close Incident
   #  servicenow.itsm.incident:
