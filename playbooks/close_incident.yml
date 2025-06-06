@@ -25,6 +25,6 @@
         username: "{{ username }}"
         password: "{{ password }}"
       state: closed
-      number: "{{ result.number }}"
+      number: "{{ result.records.number }}"
       close_code: "Solved (Permanently)"
       close_notes: "Closed"
