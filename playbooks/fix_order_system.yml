@@ -1,0 +1,34 @@
+---
+- name: Order System is Not Responding
+  hosts: webservers
+  gather_facts: false
+  become: true
+
+  tasks:
+  - name: Order System is Down
+    debug:
+      msg: "System is down and not responding"
+
+  - name: Stop Application Portal
+    service:
+      name: httpd
+      state: stopped
+
+  - name: Restoring baseline configurations
+    copy:
+      src: /var/www/html/hello-world/index.html
+      dest: /var/www/html/index.html
+      remote_src: yes
+      mode: '0644'
+
+  - name: Restoring additional configurations
+    copy: 
+      src: /var/www/html/hello-word/confirmation.html 
+      dest: /var/www/html/confirmation.html
+      remote_src: yes
+      mode: '0644'
+
+  - name: Restarting Order System
+    service:
+      name: httpd
+      state: started
