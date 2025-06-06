@@ -23,7 +23,7 @@
 
   - name: Restoring additional configurations
     copy: 
-      src: /var/www/html/hello-word/confirmation.html 
+      src: /var/www/html/hello-world/confirmation.html 
       dest: /var/www/html/confirmation.html
       remote_src: yes
       mode: '0644'
