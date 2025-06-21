@@ -1,0 +1,9 @@
+---
+- name: Gather Information from Order Processing System
+  tags: facts
+  hosts: webservers
+
+  tasks:
+  - name: Gather Facts
+    debug:
+      var: ansible_facts
