@@ -1,9 +1,9 @@
 ---
-- name: Create ServiceNow Incident
+- name: Check Status of Order Processing System
   hosts: localhost
   gather_facts: false
 
   tasks:
-  - name: Check that you can connect (GET) to a page and it returns a status 200
+  - name: Poll order system
     ansible.builtin.uri:
-      url: http://3.92.50.168
+      url: http://52.90.5.52
