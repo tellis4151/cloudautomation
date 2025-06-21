@@ -27,4 +27,5 @@
       state: closed
       number: "{{ results.records[0].number }}"
       close_code: "Solved (Permanently)"
+      description: Restored stable configuration and verified order processing system is back up and running.
       close_notes: "Closed"
