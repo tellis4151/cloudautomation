@@ -6,12 +6,10 @@
   become: true
 
   tasks:
-  - name: Update Software
-    dnf: 
-      name:
-        - net-tools
-        - sysstat
-        - git
-      state: latest
-
-  
+    - name: Update Software
+      ansible.builtin.dnf:
+        name:
+          - net-tools
+          - sysstat
+          - git
+        state: latest
