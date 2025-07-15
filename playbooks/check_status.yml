@@ -4,6 +4,6 @@
   gather_facts: false
 
   tasks:
-  - name: Poll order system
-    ansible.builtin.uri:
-      url: http://44.203.96.38
+    - name: Poll order system
+      ansible.builtin.uri:
+        url: http://44.203.96.38
