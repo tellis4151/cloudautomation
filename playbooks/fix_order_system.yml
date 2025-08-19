@@ -11,24 +11,24 @@
 
   - name: Stop Application Portal
     service:
-      name: httpd
+      name: nginx
       state: stopped
 
-  - name: Restoring baseline configurations
-    copy:
-      src: /var/www/html/hello-world/index.html
-      dest: /var/www/html/index.html
-      remote_src: yes
-      mode: '0644'
+#  - name: Restoring baseline configurations
+#   copy:
+#      src: /var/www/html/hello-world/index.html
+#      dest: /var/www/html/index.html
+#      remote_src: yes
+#      mode: '0644'
 
-  - name: Restoring additional configurations
+  - name: Restoring configurations
     copy: 
-      src: /var/www/html/hello-world/confirmation.html 
-      dest: /var/www/html/confirmation.html
+      src: /etc/nginx/nginx.conf.orig
+      dest: /etc/nginx/nginx.conf
       remote_src: yes
       mode: '0644'
 
   - name: Restarting Order System
     service:
-      name: httpd
+      name: nginx
       state: started
