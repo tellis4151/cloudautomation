@@ -6,4 +6,4 @@
   tasks:
   - name: Poll order system
     ansible.builtin.uri:
-      url: http://54.144.233.27:8080
+      url: http://54.174.160.28:8080
