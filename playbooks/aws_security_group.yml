@@ -1,0 +1,29 @@
+---
+- name: Building AWS EC2 Instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+ 
+  tasks:
+  - name: Update AWS security groups
+    amazon.aws.ec2_security_group:
+      name: arista_devices
+      description: Security Group for Arista Network arista_devices
+      vpc_id: vpc-0e7b4669a95b3ddd2
+      rules:
+        - proto: icmp
+          icmp_type: 3
+          icmp_code: 1
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 443
+          to_port: 443
+          cidr_ip: 0.0.0.0/0
+        - proto: udp 
+          from_port: 10051
+          to_port: 10051
+          group_id: sg-0f1a5cf2ee1280f47

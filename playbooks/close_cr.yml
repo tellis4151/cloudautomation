@@ -1,0 +1,30 @@
+---
+- name: Close ServiceNow Change Request
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Create Order System Incident
+    servicenow.itsm.change_request_info:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      query:
+        - short_description: LIKE Install new Arista Cloud Router
+    register: results
+
+  - name: Print out Incident info 
+    debug:
+      var: results
+
+  - name: Close Incident
+    servicenow.itsm.incident:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: closed
+      number: "{{ results.records[0].number }}"
+      close_code: "successful"
+      close_notes: "Configured hostname, interfaces, banner, vlans, user accounts, and updated AWS security groups"
