@@ -1,5 +1,5 @@
 ---
-- name: Close ServiceNow Change Request
+- name: Update Task in CR
   hosts: localhost
   gather_facts: false
 
@@ -18,14 +18,14 @@
     debug:
       var: results
 
-  - name: Close Incident
-    servicenow.itsm.incident:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      state: closed
-      number: "{{ results.records[0].number }}"
-      close_code: "successful"
+  - name: Update task
+    servicenow.itsm.change_request_task:
+      change_request_number: "{{ results.records[0].number }}"
+      type: implementation
+      state: pending
+      assigned_to: Troy Ellis
       assignment_group: Network
-      close_notes: "Configured hostname, interfaces, banner, vlans, user accounts, and updated AWS security groups"
+      short_description: Applying Arista Configurations
+      description: "Provisioning Arista Cloud Router"
+      on_hold: true
+      hold_reason: "Configuration applied by Ansible had an error"
