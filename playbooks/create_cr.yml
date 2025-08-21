@@ -4,16 +4,16 @@
   gather_facts: false
 
   tasks:
-  - name: Create Change Request for Cloud Networking Deployment
-    servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      type: standard
-      state: new
-      short_description: Install new Arista Cloud Router
-      description: Please configure new Arista Router in AWS per our standard base configurations SOP
-      priority: moderate
-      risk: low
-      impact: low
+    - name: Create Change Request for Cloud Networking Deployment
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        type: standard
+        state: new
+        short_description: Install new Arista Cloud Router
+        description: Please configure new Arista Router in AWS per our standard base configurations SOP
+        priority: moderate
+        risk: low
+        impact: low

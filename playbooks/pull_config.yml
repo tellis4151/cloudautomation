@@ -4,6 +4,6 @@
   hosts: webservers
 
   tasks:
-  - name: Gather Facts
-    debug:
-      var: ansible_facts
+    - name: Gather Facts
+      ansible.builtin.debug:
+        var: ansible_facts
