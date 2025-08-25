@@ -18,7 +18,7 @@
     debug:
       var: results
 
-  - name: Update Successul Change
+  - name: Update CR to scheduled
     servicenow.itsm.change_request:
       instance: 
         host: "{{ host }}"
@@ -28,4 +28,22 @@
       number: "{{ results.records[0].number }}"
       assignment_group: Network
       
-        
+  - name: Update CR to Implement
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: implement
+      number: "{{ results.records[0].number }}"
+      assignment_group: Network
+
+  - name: Update CR to Review
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: review
+      number: "{{ results.records[0].number }}"
+      assignment_group: Network
