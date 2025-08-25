@@ -1,17 +1,14 @@
 ---
-- name: Updating Software Package
-  hosts: edge
-  tags: update
+- name: Updating Software Packages
+  hosts: servers
   gather_facts: false
   become: true
 
   tasks:
-  - name: Update Software
-    dnf: 
+  - name: Install Packages
+    ansible.builtin.dnf:
       name:
-        - net-tools
-        - sysstat
-        - git
-      state: latest
-
-  
+        - httpd
+        - mod_ssl
+        - mariadb
+      state: present
