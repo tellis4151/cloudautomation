@@ -11,3 +11,4 @@
       description: Security Group for Arista Network arista_devices
       vpc_id: vpc-0e7b4669a95b3ddd2
       state: absent
+      region: us-east-1
