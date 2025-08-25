@@ -26,6 +26,6 @@
         password: "{{ password }}"
       state: closed
       number: "{{ results.records[0].number }}"
-      close_code: "successful"
+      close_code: "Solved (Permanently)"
       assignment_group: Network
       close_notes: "Configured hostname, interfaces, banner, vlans, user accounts, and updated AWS security groups"
