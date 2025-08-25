@@ -24,7 +24,7 @@
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
-      state: review
+      state: assess
       number: "{{ results.records[0].number }}"
       assignment_group: Network
       
