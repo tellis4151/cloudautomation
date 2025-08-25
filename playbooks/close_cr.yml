@@ -19,13 +19,13 @@
       var: results
 
   - name: Close Incident
-    servicenow.itsm.incident:
+    servicenow.itsm.change_request:
       instance: 
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
       state: closed
       number: "{{ results.records[0].number }}"
-      close_code: "Solved (Permanently)"
+      close_code: "successful"
       assignment_group: Network
       close_notes: "Configured hostname, interfaces, banner, vlans, user accounts, and updated AWS security groups"
