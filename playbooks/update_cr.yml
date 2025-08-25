@@ -11,7 +11,7 @@
         username: "{{ username }}"
         password: "{{ password }}"
       query:
-        - short_description: LIKE Install new Arista Cloud Router
+        - short_description: LIKE Install Arista Cloud Router
     register: results
 
   - name: Print out Incident info 
