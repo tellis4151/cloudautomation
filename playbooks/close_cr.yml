@@ -18,13 +18,13 @@
     debug:
       var: results
 
-  - name: Update Successul Change to Review
+  - name: Update Successul Change
     servicenow.itsm.change_request:
       instance: 
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
-      state: assess
+      state: scheduled
       number: "{{ results.records[0].number }}"
       assignment_group: Network
       
