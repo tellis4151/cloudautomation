@@ -13,8 +13,9 @@
       type: standard
       state: new
       short_description: Install Arista Cloud Router
-      description: Please configure new Arista Router in AWS per our standard base configurations SOP
+      description: Please configure new Arista Router in AWS per our standard base configurations SOP (vlans, service account, banner, hostname)  
       priority: moderate
+      category: network
       risk: low
       impact: low
       assignment_group: Network
