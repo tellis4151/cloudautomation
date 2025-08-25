@@ -1,5 +1,5 @@
 ---
-- name: Close ServiceNow Change Request
+- name: Implement ServiceNow Change Request
   hosts: localhost
   gather_facts: false
 
@@ -18,14 +18,14 @@
     debug:
       var: results
 
-  - name: Close Change Request
+  - name: Update Successul Change to Review
     servicenow.itsm.change_request:
       instance: 
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
-      state: closed
+      state: review
       number: "{{ results.records[0].number }}"
-      close_code: "successful"
       assignment_group: Network
-      close_notes: "Configured hostname, interfaces, banner, vlans, user accounts, and updated AWS security groups"
+      
+        
