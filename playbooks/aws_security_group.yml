@@ -12,10 +12,10 @@
       vpc_id: vpc-0e7b4669a95b3ddd2
       region: us-east-1
       rules:
-        - proto: icmp
-          icmp_type: 3
-          icmp_code: 1
-          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          from_port: 3306
+          to_port: 3306
+          group_id: sg-0bcb42e25b9ea5717
         - proto: tcp
           from_port: 22
           to_port: 22
@@ -27,4 +27,4 @@
         - proto: udp 
           from_port: 10051
           to_port: 10051
-          group_id: sg-0f1a5cf2ee1280f47
+          group_id: sg-006fa88ffd685f66e
