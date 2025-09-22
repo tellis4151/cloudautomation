@@ -47,3 +47,15 @@
       state: review
       number: "{{ results.records[0].number }}"
       assignment_group: Network
+
+  - name: Update CR to Review
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      close_code: "succesful"
+      close_notes: "Configured VLANS, User, Banner, Hostname. Created initial config backup. Update AWS Security Group."
+      state: closed
+      number: "{{ results.records[0].number }}"
+      assignment_group: Network
