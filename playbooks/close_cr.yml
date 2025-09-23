@@ -48,7 +48,7 @@
       number: "{{ results.records[0].number }}"
       assignment_group: Network
 
-  - name: Update CR to Review
+  - name: Close Change Request
     servicenow.itsm.change_request:
       instance: 
         host: "{{ host }}"
