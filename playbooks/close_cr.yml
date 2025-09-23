@@ -55,7 +55,7 @@
         username: "{{ username }}"
         password: "{{ password }}"
       close_code: "successful"
-      close_notes: "Configured VLANS, User, Banner, Hostname. Created initial config backup. Update AWS Security Group. Executed By Ansible Automation Platform."
+      close_notes: "Configured VLANS, Admin User, Banner, Hostname. Created initial config backup. Update AWS Security Group. Executed By Ansible Automation Platform."
       state: closed
       number: "{{ results.records[0].number }}"
       assignment_group: Network
