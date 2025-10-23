@@ -1,0 +1,18 @@
+---
+- name: Create ServiceNow Incident
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Create Order System Incident
+    servicenow.itsm.incident:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      caller: troy.ellis
+      short_description: POS Application Remediation
+      description: Callers reporting they aren't receiving order confirmation correspondence
+      impact: high
+      urgency: high
+      state: in_progress
