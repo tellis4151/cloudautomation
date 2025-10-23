@@ -1,0 +1,28 @@
+---
+- name: POS Confirmation Failure
+  hosts: webservers
+  gather_facts: false
+  become: true
+
+  tasks:
+  - name: POS System Remediation
+    debug:
+      msg: "Confirmation Correspondence Failure"
+
+  - name: Reconfigure node js app
+    ansible.builtin.command:
+      cmd: "cp confirmation.html.bk confirmation.html"
+      args:
+        chdir: /home/ec2-user/node_app/public
+
+  - name: Stop POS Application 
+    ansible.builtin.command:
+      cmd: "pm2 stop app.js"
+      args:
+        chdir: /home/ec2-user/node_app
+
+  - name: Start node js application 
+    ansible.builtin.shell: node.sh
+    args:
+      chdir: /home/ec2-user/node_app
+      
