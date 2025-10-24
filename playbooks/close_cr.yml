@@ -4,58 +4,58 @@
   gather_facts: false
 
   tasks:
-  - name: Query Change Requests
-    servicenow.itsm.change_request_info:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      query:
-        - short_description: LIKE Install Arista Cloud Router
-    register: results
+    - name: Query Change Requests
+      servicenow.itsm.change_request_info:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        query:
+          - short_description: LIKE Install Arista Cloud Router
+      register: results
 
-  - name: Print out Incident info 
-    debug:
-      var: results
+    - name: Print out Incident info
+      ansible.builtin.debug:
+        var: results
 
-  - name: Update CR to scheduled
-    servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      state: scheduled
-      number: "{{ results.records[0].number }}"
-      assignment_group: Network
-      
-  - name: Update CR to Implement
-    servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      state: implement
-      number: "{{ results.records[0].number }}"
-      assignment_group: Network
+    - name: Update CR to scheduled
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        state: scheduled
+        number: "{{ results.records[0].number }}"
+        assignment_group: Network
 
-  - name: Update CR to Review
-    servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      state: review
-      number: "{{ results.records[0].number }}"
-      assignment_group: Network
+    - name: Update CR to Implement
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        state: implement
+        number: "{{ results.records[0].number }}"
+        assignment_group: Network
 
-  - name: Close Change Request
-    servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      close_code: "successful"
-      close_notes: "Configured VLANS, Admin User, Banner, Hostname. Created initial config backup. Update AWS Security Group. Executed By Ansible Automation Platform."
-      state: closed
-      number: "{{ results.records[0].number }}"
-      assignment_group: Network
+    - name: Update CR to Review
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        state: review
+        number: "{{ results.records[0].number }}"
+        assignment_group: Network
+
+    - name: Close Change Request
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        close_code: successful
+        close_notes: Configured VLANS, Admin User, Banner, Hostname. Created initial config backup. Update AWS Security Group. Executed By Ansible Automation Platform.
+        state: closed
+        number: "{{ results.records[0].number }}"
+        assignment_group: Network
