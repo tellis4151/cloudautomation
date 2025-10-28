@@ -2,7 +2,7 @@
 - name: POS Confirmation Failure
   hosts: webservers
   gather_facts: false
-  become: true
+  become: false
 
   tasks:
   - name: POS System Remediation
