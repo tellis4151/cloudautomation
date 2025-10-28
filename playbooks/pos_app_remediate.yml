@@ -10,16 +10,14 @@
       msg: "Confirmation Correspondence Failure"
 
   - name: Reconfigure node js app
-    ansible.builtin.command:
+    ansible.builtin.shell:
       cmd: "cp confirmation.html.bk confirmation.html"
-      args:
-        chdir: /home/ec2-user/node_app/public
+      chdir: /home/ec2-user/node_app/public
 
   - name: Stop POS Application 
-    ansible.builtin.command:
+    ansible.builtin.shell:
       cmd: "pm2 stop app.js"
-      args:
-        chdir: /home/ec2-user/node_app
+      chdir: /home/ec2-user/node_app
 
   - name: Start node js application 
     ansible.builtin.shell: node.sh
