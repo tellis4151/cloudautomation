@@ -1,0 +1,32 @@
+---
+- name: Update ServiceNow POS Incident
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Query Order System Incident
+    servicenow.itsm.incident_info:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      query:
+        - short_description: LIKE POS Application Remediation
+    register: results
+
+  - name: Print out Incident info 
+    debug:
+      var: results
+
+  - name: Update Incident if restore fails
+    servicenow.itsm.incident:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      number: "{{ results.records[0].number }}"
+      state: in_progress
+      description: EDA Remediation failed. Needs further investigation.  Callers reporting POS system is not providing confirm order was processed
+      impact: high
+      urgency: high
+
