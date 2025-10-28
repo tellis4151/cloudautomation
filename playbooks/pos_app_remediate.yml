@@ -15,12 +15,12 @@
       chdir: /home/ec2-user/node_app/public
 
   - name: Stop POS Application 
-    ansible.builtin.shell: stop_node.sh 
+    ansible.builtin.shell: /home/ec2-user/node_app/stop_node.sh 
     args:
       chdir: /home/ec2-user/node_app
 
   - name: Start node js application 
-    ansible.builtin.shell: node.sh
+    ansible.builtin.shell: /home/ec2-user/node_app/node.sh
     args:
       chdir: /home/ec2-user/node_app
       
