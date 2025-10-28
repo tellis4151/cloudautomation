@@ -13,6 +13,7 @@
     ansible.builtin.shell:
       cmd: "cp confirmation.html.bk confirmation.html"
       chdir: /home/ec2-user/node_app/public
+    become: yes
 
   - name: Stop POS Application 
     ansible.builtin.shell: /home/ec2-user/node_app/stop_node.sh 
