@@ -16,7 +16,7 @@
 
   - name: Stop POS Application 
     ansible.builtin.shell:
-      cmd: "pm2 stop app.js"
+      cmd: "/usr/local/bin/pm2 stop app.js"
       chdir: /home/ec2-user/node_app
 
   - name: Start node js application 
