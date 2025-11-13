@@ -4,28 +4,28 @@
   gather_facts: false
 
   tasks:
-  - name: Close System Incident
-    servicenow.itsm.incident_info:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      query:
-        - short_description: LIKE POS Application Remediation
-    register: results
+    - name: Close System Incident
+      servicenow.itsm.incident_info:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        query:
+          - short_description: LIKE POS Application Remediation
+      register: results
 
-  - name: Print out Incident info 
-    debug:
-      var: results
+    - name: Print out Incident info
+      ansible.builtin.debug:
+        var: results
 
-  - name: Close Incident
-    servicenow.itsm.incident:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      state: closed
-      number: "{{ results.records[0].number }}"
-      close_code: "Solved (Permanently)"
-      description: Fixed Order confirmation Error, configuration restored from known good state.
-      close_notes: "Closed"
+    - name: Close Incident
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        state: closed
+        number: "{{ results.records[0].number }}"
+        close_code: Solved (Permanently)
+        description: Fixed Order confirmation Error, configuration restored from known good state.
+        close_notes: Closed
