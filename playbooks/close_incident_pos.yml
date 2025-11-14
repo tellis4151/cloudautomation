@@ -12,6 +12,7 @@
         password: "{{ password }}"
       query:
         - short_description: LIKE POS Application Remediation
+        - state: = in progress
     register: results
 
   - name: Print out Incident info 
