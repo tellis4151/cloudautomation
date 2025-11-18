@@ -3,12 +3,12 @@
   hosts: localhost
   connection: local
   gather_facts: false
- 
+
   tasks:
-  - name: Update AWS security groups
-    amazon.aws.ec2_security_group:
-      name: arista_devices
-      description: Security Group for Arista Network arista_devices
-      vpc_id: vpc-0e7b4669a95b3ddd2
-      state: absent
-      region: us-east-1
+    - name: Update AWS security groups
+      amazon.aws.ec2_security_group:
+        name: arista_devices
+        description: Security Group for Arista Network arista_devices
+        vpc_id: vpc-0e7b4669a95b3ddd2
+        state: absent
+        region: us-east-1

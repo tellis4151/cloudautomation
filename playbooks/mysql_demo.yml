@@ -1,34 +1,27 @@
 ---
 - name: Setup Mysql
   hosts: db_servers
-  become: True
+  become: true
 
   tasks:
-  - name: Install mysql on database servers
-    ansible.builtin.package:
-      name: mysql-server
-      state: present
+    - name: Install mysql on database servers
+      ansible.builtin.package:
+        name: mysql-server
+        state: present
 
-  - name: Start and enable on boot
-    ansible.builtin.service:
-      name: mysqld
-      state: started
-      enabled: true
-  
-  - name: Install pymysql
-    ansible.builtin.pip:
-      name: pymysql
-      state: present
-      executable: pip3
-  
-  - name: Create lightspeed database
-    community.mysql.mysql_db:
-      name: lightspeed
-      state: present
-  
+    - name: Start and enable on boot
+      ansible.builtin.service:
+        name: mysqld
+        state: started
+        enabled: true
 
-  
-    
-  
-  
-  
+    - name: Install pymysql
+      ansible.builtin.pip:
+        name: pymysql
+        state: present
+        executable: pip3
+
+    - name: Create lightspeed database
+      community.mysql.mysql_db:
+        name: lightspeed
+        state: present
