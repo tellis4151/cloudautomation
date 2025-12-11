@@ -4,29 +4,28 @@
   gather_facts: false
 
   tasks:
-  - name: Query Order System Incident
-    servicenow.itsm.incident_info:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      query:
-        - short_description: LIKE Order System Down Demo
-    register: results
+    - name: Query Order System Incident
+      servicenow.itsm.incident_info:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        query:
+          - short_description: LIKE Order System Down Demo
+      register: results
 
-  - name: Print out Incident info 
-    debug:
-      var: results
+    - name: Print out Incident info
+      ansible.builtin.debug:
+        var: results
 
-  - name: Update Incident if restore fails
-    servicenow.itsm.incident:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      number: "{{ results.records[0].number }}"
-      state: in_progress
-      description: EDA Remediation failed. Needs further investigation.  Callers reporting order system is timing out
-      impact: high
-      urgency: high
-
+    - name: Update Incident if restore fails
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        number: "{{ results.records[0].number }}"
+        state: in_progress
+        description: EDA Remediation failed. Needs further investigation.  Callers reporting order system is timing out
+        impact: high
+        urgency: high
