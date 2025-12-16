@@ -4,6 +4,6 @@
   gather_facts: false
 
   tasks:
-  - name: Poll order system
-    ansible.builtin.uri:
-      url: http://13.221.108.209:8080/confirmation.html
+    - name: Poll order system
+      ansible.builtin.uri:
+        url: http://13.221.108.209:8080/confirmation.html
