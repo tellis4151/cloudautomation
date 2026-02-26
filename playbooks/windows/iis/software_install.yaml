@@ -1,0 +1,27 @@
+---
+- name: Install software packages
+  hosts: windows
+
+  tasks:
+    - name: Install DotNet Hosting Bundle
+      ansible.windows.win_package:
+        path: C:\Users\Administrators\Downloads\
+        arguments: /install /passive /norestart
+        state: present
+      register: hosting_bundle_install
+
+
+    - name: Install DotNet 9 Runtime
+      ansible.windows.win_package:
+        path: C:\Users\Administrators\Downloads\
+        arguments: /install /passive /norestart
+        state: present
+      register: runtime_install
+
+    - name: Verify Dot9 is installed
+      ansible.windows.win_shell: dotnet --list-runtimes
+      register: runtimes_ouput
+
+    - name: Printout Install Output
+      ansible.builtin.debug: 
+        var: runtimes_output

@@ -1,0 +1,10 @@
+---
+- name: Install software packages
+  hosts: windows
+
+  tasks:
+    - name: Install DotNet Hosting Bundle
+      ansible.windows.win_package:
+        product_id: "{}"
+        state: absent
+      register: hosting_bundle_uninstall 
