@@ -5,30 +5,30 @@
   become: true
 
   tasks:
-  - name: Order System is Down
-    debug:
-      msg: "System is down and not responding"
+    - name: Order System is Down
+      ansible.builtin.debug:
+        msg: System is down and not responding
 
-  - name: Stop Application Portal
-    service:
-      name: nginx
-      state: stopped
+    - name: Stop Application Portal
+      ansible.builtin.service:
+        name: nginx
+        state: stopped
 
-#  - name: Restoring baseline configurations
-#   copy:
-#      src: /var/www/html/hello-world/index.html
-#      dest: /var/www/html/index.html
-#      remote_src: yes
-#      mode: '0644'
+    #  - name: Restoring baseline configurations
+    #   copy:
+    #      src: /var/www/html/hello-world/index.html
+    #      dest: /var/www/html/index.html
+    #      remote_src: yes
+    #      mode: '0644'
 
-  - name: Restoring configurations
-    copy: 
-      src: /etc/nginx/nginx.conf.orig
-      dest: /etc/nginx/nginx.conf
-      remote_src: yes
-      mode: '0644'
+    - name: Restoring configurations
+      ansible.builtin.copy:
+        src: /etc/nginx/nginx.conf.orig
+        dest: /etc/nginx/nginx.conf
+        remote_src: true
+        mode: "0644"
 
-  - name: Restarting Order System
-    service:
-      name: nginx
-      state: started
+    - name: Restarting Order System
+      ansible.builtin.service:
+        name: nginx
+        state: started
