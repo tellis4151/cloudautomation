@@ -16,9 +16,9 @@
         wait: yes
         interval: 5
         timeout: 300
-        controller_host: "{{ host }}"
-        controller_username: "{{ username }}"
-        controller_password: "{{ password }}"
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
         validate_certs: false
       register: sync_result
 
@@ -46,7 +46,7 @@
         hosts:
           - "{{ found_public_dns }}"
         state: present  
-        controller_host: "{{ host }}"
-        controller_username: "{{ username }}"
-        controller_password: "{{ password }}"
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
         validate_certs: false
