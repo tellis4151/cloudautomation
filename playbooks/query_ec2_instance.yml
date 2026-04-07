@@ -35,12 +35,15 @@
         tags:
           InventoryGroup: "{{ target_group_tag }}"
 
-    - name: Trigger AAP Inventory Sync to reflect changes
+    - name: Sync the inventory source
       ansible.controller.inventory_source_update:
         name: "AWS"
         inventory: "AWS"
         wait: yes
-        controller_host: "{{ lookup('env', 'CONTROLLER_HOST') }}"
-        controller_username: "{{ lookup('env', 'CONTROLLER_USERNAME') }}"
-        controller_password: "{{ lookup('env', 'CONTROLLER_PASSWORD') }}"
+        interval: 5
+        timeout: 300
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
         validate_certs: false
+      register: sync_result

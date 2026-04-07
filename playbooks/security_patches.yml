@@ -5,8 +5,17 @@
   become: true
 
   tasks:
-  - name: Update security packages 
-    dnf:
-      name: "*"
-      state: latest
-      security: true
+    - name: Register system
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ rhsm_username }}"
+        password: "{{ rhsm_password }}"
+        auto_attach: true
+      register: registration_output
+
+
+    - name: Update security packages 
+      dnf:
+        name: "*"
+        state: latest
+        security: true
