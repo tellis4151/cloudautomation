@@ -1,6 +1,6 @@
 ---
 - name: Enable FIPS 140-2 Mode
-  hosts: all
+  hosts: rhel_servers
   become: yes
   tasks:
     - name: Install dracut-fips package

@@ -1,6 +1,6 @@
 ---
 - name: Update security patches on RHEL servers
-  hosts: demo
+  hosts: rhel_servers
   gather_facts: false
   become: true
 
