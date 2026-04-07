@@ -1,0 +1,21 @@
+---
+- name: Create ServiceNow Deployment Change Request
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Create Change Request for RHEL Server Deployment
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      type: standard
+      state: new
+      short_description: Deploy New RHEL Server
+      description: Deploy new RHEL VM and apply post deployment configurations
+      priority: moderate
+      category: Software
+      risk: low
+      impact: low
+      assignment_group: Software

@@ -1,0 +1,12 @@
+---
+- name: Update security patches on RHEL servers
+  hosts: demo
+  gather_facts: false
+  become: true
+
+  tasks:
+  - name: Update security packages 
+    dnf:
+      name: "*"
+      state: latest
+      security: true

@@ -1,0 +1,26 @@
+---
+- name: Enable FIPS 140-2 Mode
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install dracut-fips package
+      dnf:
+        name: dracut-fips
+        state: present
+
+    - name: Enable FIPS in GRUB
+      command: fips-mode-setup --enable
+      register: fips_enable
+
+    - name: Reboot server to apply FIPS mode
+      reboot:
+        msg: "Rebooting to enable FIPS"
+        connect_timeout: 5
+        reboot_timeout: 600
+      when: fips_enable.changed
+
+    - name: Check if FIPS is enabled
+      command: fips-mode-setup --check
+      register: fips_check
+      failed_when: "'FIPS mode is enabled' not in fips_check.stdout"
+      changed_when: false

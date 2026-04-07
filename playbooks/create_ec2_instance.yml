@@ -17,7 +17,7 @@
         subnet_id: "{{ subnet_id }}"
       vpc_subnet_id: "{{ vpc_subnet_id  }}"
       security_group: "{{ security_group }}"
-      wait: yes
+      wait: true
       region: "{{ region }}"
       volumes:
         - device_name: /dev/sda1

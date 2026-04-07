@@ -1,0 +1,23 @@
+---
+- name: Trigger Inventory Source Sync in AAP
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Sync the inventory source
+      ansible.controller.inventory_source_update:
+        name: "{{ source_name }}"
+        inventory: "{{ inventory_name }}"
+        wait: yes
+        interval: 5
+        timeout: 300
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+        validate_certs: false
+      register: sync_result
+
+    - name: Show sync status
+      ansible.builtin.debug:
+        msg: "Sync completed with status: {{ sync_result.status }}"

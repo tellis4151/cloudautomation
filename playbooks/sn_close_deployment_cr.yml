@@ -1,0 +1,61 @@
+---
+- name: Implement ServiceNow Deployment Change Request
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Query Change Requests
+    servicenow.itsm.change_request_info:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      query:
+        - short_description: LIKE Deploy New RHEL Server
+    register: results
+
+  - name: Print out CR info 
+    debug:
+      var: results
+
+  - name: Update CR to scheduled
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: scheduled
+      number: "{{ results.records[0].number }}"
+      assignment_group: Software
+      
+  - name: Update CR to Implement
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: implement
+      number: "{{ results.records[0].number }}"
+      assignment_group: Software
+
+  - name: Update CR to Review
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      state: review
+      number: "{{ results.records[0].number }}"
+      assignment_group: Software
+
+  - name: Close Change Request
+    servicenow.itsm.change_request:
+      instance: 
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      close_code: "successful"
+      close_notes: "Deployed New RHEL Server, installed latest security patches, and configured FIPS"
+      state: closed
+      number: "{{ results.records[0].number }}"
+      assignment_group: Software
