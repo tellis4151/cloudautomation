@@ -1,0 +1,52 @@
+---
+- name: Query EC2 by Name and Add to Group via Tagging
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    target_group: "rhel_servers"
+    target_instance_name: "demo-rhelserver"
+    aws_region: "us-east-1"
+
+  tasks:
+    - name: Sync the inventory source
+      ansible.controller.inventory_source_update:
+        name: "AWS"
+        inventory: "AWS"
+        wait: yes
+        interval: 5
+        timeout: 300
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+        validate_certs: false
+      register: sync_result
+
+    - name: Search for the instance by Name tag
+      amazon.aws.ec2_instance_info:
+        region: "{{ aws_region }}"
+        filters:
+          "tag:Name": "{{ target_instance_name }}"
+          instance-state-name: [ "running" ]
+      register: ec2_search
+
+    - name: Fail if instance not found
+      ansible.builtin.fail:
+        msg: "No running instance found with name: {{ target_instance_name }}"
+      when: ec2_search.instances | length == 0
+
+    - name: Extract Instance ID
+      ansible.builtin.set_fact:
+        found_public_dns: "{{ ec2_search.instances[0].public_dns_name }}"
+
+    - name: Add host to the Group
+      ansible.controller.group:
+        name: "{{ target_group }}"
+        inventory: "AWS"
+        hosts:
+          - "{{ found_public_dns }}"
+        state: present  
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+        validate_certs: false
