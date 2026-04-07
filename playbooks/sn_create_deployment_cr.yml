@@ -15,7 +15,7 @@
       short_description: Deploy New RHEL Server
       description: Deploy new RHEL VM and apply post deployment configurations
       priority: moderate
-      category: Software
+      category: software
       risk: low
       impact: low
-      assignment_group: Software
+      assignment_group: software
