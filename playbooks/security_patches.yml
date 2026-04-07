@@ -8,8 +8,8 @@
     - name: Register system
       community.general.redhat_subscription:
         state: present
-        username: "{{ rhsm_username }}"
-        password: "{{ rhsm_password }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
         auto_attach: true
       register: registration_output
 
