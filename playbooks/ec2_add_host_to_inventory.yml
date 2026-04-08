@@ -5,7 +5,7 @@
   gather_facts: false
   vars:
     target_group: "rhel_servers"
-    target_instance_name: "demo-rhelserver-1"
+    target_instance_name: "demo-rhelserver"
     aws_region: "us-east-1"
 
   tasks:
