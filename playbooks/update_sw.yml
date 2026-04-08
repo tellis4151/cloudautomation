@@ -5,10 +5,10 @@
   become: true
 
   tasks:
-  - name: Install Packages
-    ansible.builtin.dnf:
-      name:
-        - httpd
-        - mod_ssl
-        - mariadb
-      state: present
+    - name: Install Packages
+      ansible.builtin.dnf:
+        name:
+          - httpd
+          - mod_ssl
+          - mariadb
+        state: present

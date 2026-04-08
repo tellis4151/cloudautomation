@@ -10,7 +10,6 @@
         state: present
       register: hosting_bundle_install
 
-
     - name: Install DotNet 9 Runtime
       ansible.windows.win_package:
         path: C:\Users\Administrators\Downloads\
@@ -23,5 +22,5 @@
       register: runtimes_ouput
 
     - name: Printout Install Output
-      ansible.builtin.debug: 
+      ansible.builtin.debug:
         var: runtimes_output
