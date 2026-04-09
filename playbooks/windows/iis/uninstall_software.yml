@@ -7,4 +7,4 @@
       ansible.windows.win_package:
         product_id: "{}"
         state: absent
-      register: hosting_bundle_uninstall 
+      register: hosting_bundle_uninstall

@@ -3,12 +3,12 @@
   hosts: windows
   vars:
     iis_sites:
-      - name: 'Ansible Playbook Test'
-        port: '8080'
-        path: 'C:\sites\playbooktest'
-      - name: 'Ansible Playbook Test 2'
-        port: '8081'
-        path: 'C:\sites\playbooktest2'
+      - name: Ansible Playbook Test
+        port: "8080"
+        path: C:\sites\playbooktest
+      - name: Ansible Playbook Test 2
+        port: "8081"
+        path: C:\sites\playbooktest2
 
   tasks:
     - name: Stop iis service
@@ -37,7 +37,7 @@
 
     - name: Remove port for site on the firewall
       community.windows.win_firewall_rule:
-        name: "iisport{{ item.port }}"
+        name: iisport{{ item.port }}
         state: absent
         localport: "{{ item.port }}"
         action: Allow
