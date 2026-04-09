@@ -4,30 +4,30 @@
   become: true
 
   vars:
-    users:   
-       - user1
-       - user2
-       - user3
+    users:
+      - user1
+      - user2
+      - user3
     groups:
-        - sysadmin
-        - devops
+      - sysadmin
+      - devops
 
   tasks:
-  - name: Create groups
-    ansible.builtin.group:
-      name: "{{ item }}"
-      state: present
-    loop: "{{ groups }}"
-    
-  - name: Create Users
-    ansible.builtin.user:
-      name: "{{ item }}" 
-      state: present
-      groups: sysadmin
-    loop: "{{ users }}"
+    - name: Create groups
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ groups }}"
 
-  - name: Report user status
-    ansible.builtin.debug:
-      msg: "Users {{ item }} exists."
-    when: user_check.rc == 0
-    loop: "{{ users }}"
+    - name: Create Users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        groups: sysadmin
+      loop: "{{ users }}"
+
+    - name: Report user status
+      ansible.builtin.debug:
+        msg: Users {{ item }} exists.
+      when: user_check.rc == 0
+      loop: "{{ users }}"

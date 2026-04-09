@@ -4,28 +4,28 @@
   gather_facts: false
 
   tasks:
-  - name: Query RHEL Server Deployment CR
-    servicenow.itsm.change_request_info:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
-      query:
-        - short_description: LIKE Deploy New RHEL Server
-    register: results
+    - name: Query RHEL Server Deployment CR
+      servicenow.itsm.change_request_info:
+        instance:
+          host: "{{ host }}"
+          username: "{{ username }}"
+          password: "{{ password }}"
+        query:
+          - short_description: LIKE Deploy New RHEL Server
+      register: results
 
-  - name: Print out Incident info 
-    debug:
-      var: results
+    - name: Print out Incident info
+      ansible.builtin.debug:
+        var: results
 
-  - name: Update task
-    servicenow.itsm.change_request_task:
-      change_request_number: "{{ results.records[0].number }}"
-      type: implementation
-      state: pending
-      assigned_to: Troy Ellis
-      assignment_group: software
-      short_description: Provisioning RHEL Server Failed
-      description: "Provisioning RHEL Server failed during multiple steps"
-      on_hold: true
-      hold_reason: "Configuration applied by Ansible failed during provisioning"
+    - name: Update task
+      servicenow.itsm.change_request_task:
+        change_request_number: "{{ results.records[0].number }}"
+        type: implementation
+        state: pending
+        assigned_to: Troy Ellis
+        assignment_group: software
+        short_description: Provisioning RHEL Server Failed
+        description: Provisioning RHEL Server failed during multiple steps
+        on_hold: true
+        hold_reason: Configuration applied by Ansible failed during provisioning
