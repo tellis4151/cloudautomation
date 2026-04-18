@@ -5,23 +5,22 @@
   become: false
 
   tasks:
-  - name: POS System Remediation
-    debug:
-      msg: "Confirmation Correspondence Failure"
+    - name: POS System Remediation
+      ansible.builtin.debug:
+        msg: Confirmation Correspondence Failure
 
-  - name: Reconfigure node js app
-    ansible.builtin.shell:
-      cmd: "cp confirmation.html.bk confirmation.html"
-      chdir: /home/ec2-user/node_app/public
-    become: yes
+    - name: Reconfigure node js app
+      ansible.builtin.shell:
+        cmd: cp confirmation.html.bk confirmation.html
+        chdir: /home/ec2-user/node_app/public
+      become: true
 
-  - name: Stop POS Application 
-    ansible.builtin.shell: /home/ec2-user/node_app/stop_node.sh 
-    args:
-      chdir: /home/ec2-user/node_app
+    - name: Stop POS Application
+      ansible.builtin.shell: /home/ec2-user/node_app/stop_node.sh
+      args:
+        chdir: /home/ec2-user/node_app
 
-  - name: Start node js application 
-    ansible.builtin.shell: /home/ec2-user/node_app/node.sh
-    args:
-      chdir: /home/ec2-user/node_app
-      
+    - name: Start node js application
+      ansible.builtin.shell: /home/ec2-user/node_app/node.sh
+      args:
+        chdir: /home/ec2-user/node_app
