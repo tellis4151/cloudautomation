@@ -11,7 +11,7 @@
 
   - name: Git clone repo 
     ansible.builtin.command:
-      cmd: git clone https://github.com/tellis4151/ee_builds.git /home/ec2-user
+      cmd: git clone https://github.com/tellis4151/ee_builds.git /home/ec2-user/ee_builds
     when: not dest_dir.stat.exists
     
   - name: Podman login
