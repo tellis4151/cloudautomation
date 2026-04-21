@@ -7,4 +7,4 @@
   tasks:
   - name: Hello World
     debug:
-      msg: "Hello World"
+      msg: "{{ message }}"
