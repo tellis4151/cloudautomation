@@ -17,15 +17,15 @@
   - name: Podman login
     ansible.builtin.command:
       cmd: podman login  --username "{{ username }}" --password "{{ password }}"
-      
+
   - name: Run Ansible builder create command 
-    ansible.buiiltin.command:
+    ansible.builtin.command:
       cmd: ansible-builder create -v 3
       args:
         chdir: /home/ec2-user/ee_builds
 
   - name: Run Ansible builder build command
-    ansible.buiiltin.command:
+    ansible.builtin.command:
       cmd: ansible-builder build -f execution-environment.yml -v 3 -t localhost/iac_ee_new:latest
       args:
         chdir: /home/ec2-user/ee_builds
