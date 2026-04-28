@@ -5,17 +5,17 @@
   gather_facts: false
 
   vars:
-    target_instance_name: "demo-rhelserver"
-    target_group_tag: "rhel_servers"
-    aws_region: "us-east-1"
+    target_instance_name: demo-rhelserver
+    target_group_tag: rhel_servers
+    aws_region: us-east-1
 
   tasks:
     - name: Search for the instance by Name tag
       amazon.aws.ec2_instance_info:
         region: "{{ aws_region }}"
         filters:
-          "tag:Name": "{{ target_instance_name }}"
-          instance-state-name: [ "running" ]
+          tag:Name: "{{ target_instance_name }}"
+          instance-state-name: [running]
       register: ec2_search
 
     - name: Fail if instance not found
@@ -36,14 +36,14 @@
           InventoryGroup: "{{ target_group_tag }}"
 
     - name: Sync the inventory source
-      ansible.controller.inventory_source_update:
-        name: "AWS"
-        inventory: "AWS"
-        wait: yes
+      register: sync_result
+      awx.awx.inventory_source_update:
+        name: AWS
+        inventory: AWS
+        wait: true
         interval: 5
         timeout: 300
         controller_host: "{{ controller_host }}"
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
         validate_certs: false
-      register: sync_result
