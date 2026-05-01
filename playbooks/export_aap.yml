@@ -10,11 +10,13 @@
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
         validate_certs: false
-        job_templates: 'all'
-        projects: 'all'
-        credentials: 'all'
+        all: true
       register: export_output
       delegate_to: localhost
+
+    - name: debug
+      debug:
+        var: export_output
 
     - name: Save Export to a local file
       ansible.builtin.copy:
