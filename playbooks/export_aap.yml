@@ -10,9 +10,10 @@
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
         validate_certs: false
-        inventory: "all" 
-        job_templates: "all"
-        credentials: "all"
+        all: true
+        inventory: 'all' 
+        job_templates: 'all'
+        credentials: 'all'
       register: export_output
       delegate_to: localhost
 
