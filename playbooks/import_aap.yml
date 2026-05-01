@@ -3,7 +3,7 @@
   hosts: backup-server
   gather_facts: false
   vars: 
-    export_file_path: "/home/ec2-user/export/controller_export.yaml"
+    export_file_path: "/home/ec2-user/export/controller_export.yml"
     local_temp_path: "/tmp/controller_import.yaml"
 
   tasks:
