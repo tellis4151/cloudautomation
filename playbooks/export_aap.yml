@@ -1,7 +1,6 @@
 ---
 - name: Export AAP resources
-  hosts: localhost
-  connection: local
+  hosts: backup-server
   gather_facts: false
 
   tasks:
@@ -15,9 +14,9 @@
         projects: 'all'
         credentials: 'all'
       register: export_output
+      delegate_to: localhost
 
     - name: Save Export to a local file
-      hosts: backup-server
       ansible.builtin.copy:
         content: "{{ export_output | to_nice_yaml }}"
         dest: "/home/ec2-user/export/controller_export.yml"
