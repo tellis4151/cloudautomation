@@ -1,0 +1,24 @@
+---
+- name: Export AAP resources
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Export specific resources
+      ansible.controller.export:
+        controller_host: "{{ controller_host }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
+        validate_certs: false
+        job_templates: 'all'
+        projects: 'all'
+        credentials: 'all'
+      register: export_output
+
+    - name: Save Export to a local file
+      ansible.builtin.copy:
+        content: "{{ export_output | to_nice_yaml }}"
+        dest: "/home/ec2-user/export/controller_export.yml"
+        mode: "0644"
+      delegate_to: backup-server
