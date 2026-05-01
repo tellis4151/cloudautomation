@@ -21,3 +21,5 @@
         validate_certs: false
         assets: "{{ lookup('ansible.builtin.file', local_temp_path) | from_yaml }}"
       delegate_to: localhost
+      environment:
+        AWXKIT_API_BASE_PATH: "/api/controller/"
