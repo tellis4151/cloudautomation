@@ -17,8 +17,9 @@
       register: export_output
 
     - name: Save Export to a local file
+      hosts: backup-server
       ansible.builtin.copy:
         content: "{{ export_output | to_nice_yaml }}"
         dest: "/home/ec2-user/export/controller_export.yml"
         mode: "0644"
-      delegate_to: backup-server
+      
