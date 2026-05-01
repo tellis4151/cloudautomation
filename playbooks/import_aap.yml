@@ -10,7 +10,7 @@
     - name: Retrieve the export file from the backup-server
       ansible.builtin.fetch:
         src: "{{ export_file_path }}"
-        dest: "{{ import_temp_path }}"
+        dest: "{{ local_temp_path }}"
         flat: true
 
     - name: Import resources
