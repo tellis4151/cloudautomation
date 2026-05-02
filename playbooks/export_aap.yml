@@ -5,25 +5,24 @@
 
   tasks:
     - name: Export specific resources
-      ansible.controller.export:
+      register: export_output
+      delegate_to: localhost
+      awx.awx.export:
         controller_host: "{{ controller_host }}"
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
         validate_certs: false
         all: true
-        inventory: 'all' 
-        job_templates: 'all'
-        credentials: 'all'
-      register: export_output
-      delegate_to: localhost
+        inventory: all
+        job_templates: all
+        credentials: all
 
     - name: debug
-      debug:
+      ansible.builtin.debug:
         var: export_output
 
     - name: Save Export to a local file
       ansible.builtin.copy:
         content: "{{ export_output | to_nice_yaml }}"
-        dest: "/home/ec2-user/export/controller_export.yml"
+        dest: /home/ec2-user/export/controller_export.yml
         mode: "0644"
-      

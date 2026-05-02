@@ -13,9 +13,8 @@
         auto_attach: true
       register: registration_output
 
-
-    - name: Update security packages 
-      dnf:
+    - name: Update security packages
+      ansible.builtin.dnf:
         name: "*"
         state: latest
         security: true
