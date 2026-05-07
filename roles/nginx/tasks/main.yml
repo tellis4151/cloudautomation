@@ -5,18 +5,18 @@
     state: present
 
 - name: Backup existing index.html file
-  copy:
+  ansible.builtin.copy:
     src: /usr/share/nginx/html/index.html
     dest: /tmp/index.html.orig
     remote_src: true
-  
+
 - name: Copy index.html to Nginx directory
-  copy:
+  ansible.builtin.copy:
     src: files/index.html
     dest: /usr/share/nginx/html/index.html
 
 - name: Ensure nginx is runnning
-  systemd:
+  ansible.builtin.systemd:
     name: nginx
     state: started
-    enabled: yes
+    enabled: true

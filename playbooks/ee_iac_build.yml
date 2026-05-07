@@ -4,40 +4,39 @@
   gather_facts: false
 
   tasks:
-  - name: Check if destination directory exists
-    ansible.builtin.stat:
-      path: /home/ec2-user/ee_builds
-    register: dest_dir
+    - name: Check if destination directory exists
+      ansible.builtin.stat:
+        path: /home/ec2-user/ee_builds
+      register: dest_dir
 
-  - name: Git clone repo 
-    ansible.builtin.command:
-      cmd: git clone https://github.com/tellis4151/ee_builds.git /home/ec2-user/ee_builds
-    when: not dest_dir.stat.exists
+    - name: Git clone repo
+      ansible.builtin.command:
+        cmd: git clone https://github.com/tellis4151/ee_builds.git /home/ec2-user/ee_builds
+      when: not dest_dir.stat.exists
 
-  - name: Pull latested files from previously cloned repo
-    ansible.builtin.shell: git pull
-    args:
-      chdir: /home/ec2-user/ee_builds
-    
-  - name: Podman login
-    ansible.builtin.command:
-      cmd: podman login  --username "{{ username }}" --password "{{ password }}"
+    - name: Pull latested files from previously cloned repo
+      ansible.builtin.shell: git pull
+      args:
+        chdir: /home/ec2-user/ee_builds
 
-  - name: Run Ansible builder create command 
-    ansible.builtin.shell: ansible-builder create -v 3
-    args:
-      chdir: /home/ec2-user/ee_builds
+    - name: Podman login
+      ansible.builtin.command:
+        cmd: podman login  --username "{{ username }}" --password "{{ password }}"
 
-  - name: Run Ansible builder build command
-    ansible.builtin.shell: ansible-builder build -f execution-environment.yml -v 3 -t "{{ tag }}"
-    args:
-      chdir: /home/ec2-user/ee_builds
+    - name: Run Ansible builder create command
+      ansible.builtin.shell: ansible-builder create -v 3
+      args:
+        chdir: /home/ec2-user/ee_builds
 
-  - name: Run podman images
-    ansible.builtin.shell: podman images
-    register: ee_images
+    - name: Run Ansible builder build command
+      ansible.builtin.shell: ansible-builder build -f execution-environment.yml -v 3 -t "{{ tag }}"
+      args:
+        chdir: /home/ec2-user/ee_builds
 
-  - name: Print EE images
-    debug:
-      var: ee_images 
-  
+    - name: Run podman images
+      ansible.builtin.shell: podman images
+      register: ee_images
+
+    - name: Print EE images
+      ansible.builtin.debug:
+        var: ee_images

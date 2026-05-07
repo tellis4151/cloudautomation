@@ -2,9 +2,9 @@
 - name: Import AAP resources
   hosts: backup-server
   gather_facts: false
-  vars: 
-    export_file_path: "/home/ec2-user/export/controller_export.yml"
-    local_temp_path: "/tmp/controller_import.yaml"
+  vars:
+    export_file_path: /home/ec2-user/export/controller_export.yml
+    local_temp_path: /tmp/controller_import.yaml
 
   tasks:
     - name: Retrieve the export file from the backup-server
@@ -14,12 +14,12 @@
         flat: true
 
     - name: Import resources
-      ansible.controller.import:
+      delegate_to: localhost
+      environment:
+        AWXKIT_API_BASE_PATH: /api/controller/
+      awx.awx.import:
         controller_host: "{{ controller_host }}"
         controller_username: "{{ controller_username }}"
         controller_password: "{{ controller_password }}"
         validate_certs: false
         assets: "{{ lookup('ansible.builtin.file', local_temp_path) | from_yaml }}"
-      delegate_to: localhost
-      environment:
-        AWXKIT_API_BASE_PATH: "/api/controller/"
