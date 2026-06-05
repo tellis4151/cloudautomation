@@ -11,7 +11,7 @@
         username: "{{ username }}"
         password: "{{ password }}"
       query:
-        - short_description: LIKE Create Incident - Packages not installed
+        - short_description: LIKE Required RHEL Packages Not Installed
     register: results
 
   - name: Print out Incident info 
