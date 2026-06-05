@@ -1,17 +1,17 @@
 ---
-- name: Create ServiceNow Incident
+- name: Close ServiceNow Incident
   hosts: localhost
   gather_facts: false
 
   tasks:
-  - name: Create Order System Incident
+  - name: Query Open Incidents
     servicenow.itsm.incident_info:
       instance: 
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
       query:
-        - short_description: LIKE Order System Down Demo
+        - short_description: LIKE Create Incident - Packages not installed
     register: results
 
   - name: Print out Incident info 
@@ -27,5 +27,5 @@
       state: closed
       number: "{{ results.records[0].number }}"
       close_code: "Solved (Permanently)"
-      description: Restored stable configuration and verified order processing system is back up and running.
+      description: Installed required packages
       close_notes: "Closed"

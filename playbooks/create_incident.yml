@@ -4,15 +4,15 @@
   gather_facts: false
 
   tasks:
-  - name: Create Order System Incident
+  - name: Create Incident - Packages not installed
     servicenow.itsm.incident:
       instance: 
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
       caller: troy.ellis
-      short_description: Order System Down Demo
-      description: Callers reporting order system is timing out
+      short_description: Required RHEL Packages Not Installed
+      description: Apache, mariadb, mod_ssl not installed on RHEL Servers
       impact: high
       urgency: high
       state: in_progress
