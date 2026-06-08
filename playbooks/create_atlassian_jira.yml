@@ -1,0 +1,32 @@
+---
+- name: Create an Incident in Atlassian Jira
+  hosts: localhost
+  gather_facts: false
+  vars:
+    jira_server: "https://your-domain.atlassian.net"
+    jira_username: "your-email@example.com"
+    jira_api_token: "your-jira-api-token"
+    project_key: "OPS"          
+    issue_type: "Incident"     
+
+  tasks:
+    - name: Generate a new Jira incident
+      community.general.jira:
+        instance_url: "{{ jira_server }}"
+        username: "{{ jira_username }}"
+        password: "{{ jira_api_token }}"  # For Jira Cloud, the password is your API Token
+        operation: create
+        project: "{{ project_key }}"
+        issuetype: "{{ issue_type }}"
+        summary: "Production Database Latency Spike Detected"
+        description: |
+          Automated Alert from Ansible:
+          The database response time exceeded 500ms for a sustained period of 5 minutes.
+          Please investigate immediately.
+        fields:
+          priority: { "name": "High" }
+      register: jira_result
+
+    - name: Display the created Jira issue details
+      ansible.builtin.debug:
+        msg: "Successfully created issue {{ jira_result.meta.key }}. URL: {{ jira_server }}/browse/{{ jira_result.meta.key }}"
