@@ -20,10 +20,10 @@
 
   - name: Close Incident
     servicenow.itsm.incident:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       state: closed
       number: "{{ results.records[0].number }}"
       close_code: "Solved (Permanently)"
