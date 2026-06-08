@@ -6,10 +6,10 @@
   tasks:
   - name: Query Open Incidents
     servicenow.itsm.incident_info:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       query:
         - short_description: LIKE Required RHEL Packages Not Installed
     register: results
