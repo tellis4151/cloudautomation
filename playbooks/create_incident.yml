@@ -7,9 +7,9 @@
   - name: Create Incident - Packages not installed
     servicenow.itsm.incident:
       instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+        host: "{{ SN_HOST }}"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
       caller: troy.ellis
       short_description: Required RHEL Packages Not Installed
       description: Apache, mariadb, mod_ssl not installed on RHEL Servers
