@@ -1,0 +1,9 @@
+---
+- name: Gather Data Repository Facts
+  hosts: data_repository
+  become: true
+
+  tasks:
+  - name: Gather Facts
+    debug:
+      var: ansible_facts
