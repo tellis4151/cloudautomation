@@ -7,9 +7,9 @@
   - name: Query Change Requests
     servicenow.itsm.change_request_info:
       instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       query:
         - short_description: LIKE Provision VMWare RHEL VM
     register: results
