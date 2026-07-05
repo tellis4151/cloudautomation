@@ -6,7 +6,7 @@
   tasks:
   - name: Query Change Requests
     servicenow.itsm.change_request_info:
-      instance: 
+#      instance: 
 #        host: "{{ host }}"
 #        username: "{{ username }}"
 #        password: "{{ password }}"
@@ -20,40 +20,40 @@
 
   - name: Update CR to scheduled
     servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       state: scheduled
       number: "{{ results.records[0].number }}"
       assignment_group: Network
       
   - name: Update CR to Implement
     servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       state: implement
       number: "{{ results.records[0].number }}"
       assignment_group: Network
 
   - name: Update CR to Review
     servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       state: review
       number: "{{ results.records[0].number }}"
       assignment_group: Network
 
   - name: Close Change Request
     servicenow.itsm.change_request:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       close_code: "successful"
       close_notes: "Successfully provisioned VMWare VM via Ansible Automation Platform Workflow.  System hostname has been set, system is registered, and security packages installed."
       state: closed
