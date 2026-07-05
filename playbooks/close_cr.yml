@@ -11,7 +11,7 @@
         username: "{{ username }}"
         password: "{{ password }}"
       query:
-        - short_description: LIKE Install Arista Cloud Router
+        - short_description: LIKE Provision VMWare RHEL VM
     register: results
 
   - name: Print out Incident info 
@@ -55,7 +55,7 @@
         username: "{{ username }}"
         password: "{{ password }}"
       close_code: "successful"
-      close_notes: "Configured VLANS, Admin User, Banner, Hostname. Created initial config backup. Update AWS Security Group. Executed By Ansible Automation Platform."
+      close_notes: "Successfully provisioned VMWare VM via Ansible Automation Platform Workflow.  System hostname has been set, system is registered, and security packages installed."
       state: closed
       number: "{{ results.records[0].number }}"
       assignment_group: Network

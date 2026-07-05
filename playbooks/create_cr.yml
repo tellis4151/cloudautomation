@@ -12,7 +12,7 @@
 #        password: "{{ password }}"
       type: standard
       state: new
-      short_description: Provision new RHEL VM
+      short_description: Provision VMWare RHEL VM
       description: Provision VM in VMWare 
       priority: moderate
       category: network
