@@ -1,0 +1,28 @@
+---
+- name: Merge ServiceNow Data via Application Number
+  hosts: all
+  gather_facts: false
+  tasks:
+    # 1. Every host with 'Inventory 2' data sends its info to a global map on localhost
+    - name: "Build Global Map on Localhost"
+      set_fact:
+        master_app_map: "{{ hostvars['localhost']['master_app_map'] | default({}) | combine({ 
+            sn_application_number: {
+              'owner': sn_application_owner,
+              'lead': sn_application_technical_lead
+            } 
+          }) }}"
+      when: 
+        - sn_application_owner is defined
+        - sn_application_number is defined
+      delegate_to: localhost
+      delegate_facts: true
+
+    # 2. Inventory 1 hosts pull the data from that global map
+    - name: "Apply Data to Inventory 1 Hosts"
+      set_fact:
+        sn_application_owner: "{{ hostvars['localhost']['master_app_map'][sn_application_number]['owner'] }}"
+        sn_application_technical_lead: "{{ hostvars['localhost']['master_app_map'][sn_application_number]['lead'] }}"
+      when: 
+        - sn_name is defined
+        - sn_application_number in hostvars['localhost']['master_app_map'] | default({})
