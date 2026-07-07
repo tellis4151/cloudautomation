@@ -1,0 +1,28 @@
+---
+- name: Install LAMP Stack
+  hosts: rhel10
+  tasks:
+    - name: Install Apache
+      ansible.builtin.package:
+        name: httpd
+        state: present
+    - name: Install MySQL
+      ansible.builtin.package:
+        name: mariadb-server
+        state: present
+    - name: Install PHP
+      ansible.builtin.package:
+        name: php
+        state: present
+    - name: Start Apache
+      ansible.builtin.service:
+        name: httpd
+        state: started
+    - name: Start MySQL
+      ansible.builtin.service:
+        name: mariadb
+        state: started
+    - name: Install Nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
