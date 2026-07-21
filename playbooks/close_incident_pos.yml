@@ -6,10 +6,10 @@
   tasks:
   - name: Close System Incident
     servicenow.itsm.incident_info:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
       query:
         - short_description: LIKE POS Application Remediation
           state: = in_progress
@@ -21,10 +21,10 @@
 
   - name: Close Incident
     servicenow.itsm.incident:
-      instance: 
-        host: "{{ host }}"
-        username: "{{ username }}"
-        password: "{{ password }}"
+ #     instance: 
+ #       host: "{{ host }}"
+ #       username: "{{ username }}"
+ #       password: "{{ password }}"
       state: closed
       number: "{{ results.records[0].number }}"
       close_code: "Solved (Permanently)"
