@@ -1,0 +1,65 @@
+---
+- name: Implement ServiceNow Change Request
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: Query Change Requests
+    servicenow.itsm.change_request_info:
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
+      query:
+        - short_description: LIKE New EC2 Cloud Instance
+    register: results
+
+  - name: Print out Incident info 
+    debug:
+      var: results
+
+  - name: Update CR to scheduled
+    servicenow.itsm.change_request:
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
+      state: scheduled
+#      number: "{{ results.records[0].number }}"
+      number: "{{ change_number }}"
+      assignment_group: Network
+      
+  - name: Update CR to Implement
+    servicenow.itsm.change_request:
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
+      state: implement
+#      number: "{{ results.records[0].number }}"
+      number: "{{ change_number }}"
+      assignment_group: Network
+
+  - name: Update CR to Review
+    servicenow.itsm.change_request:
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
+      state: review
+#      number: "{{ results.records[0].number }}"
+      number: "{{ change_number }}"
+      assignment_group: Network
+
+  - name: Close Change Request
+    servicenow.itsm.change_request:
+#      instance: 
+#        host: "{{ host }}"
+#        username: "{{ username }}"
+#        password: "{{ password }}"
+      close_code: "successful"
+      close_notes: "Successfully provisioned Cloud Instance from ServiceNow CR-EDA Workflow"
+      state: closed
+#      number: "{{ results.records[0].number }}"
+      number: "{{ change_number }}"
+      assignment_group: Network

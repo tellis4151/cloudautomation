@@ -10,8 +10,8 @@
   tasks:
     - name: Sync the inventory source
       ansible.controller.inventory_source_update:
-        name: "AWS"
-        inventory: "AWS"
+        name: "AWS Dynamic Inventory"
+        inventory: "AWS Inventory"
         wait: yes
         interval: 5
         timeout: 300
