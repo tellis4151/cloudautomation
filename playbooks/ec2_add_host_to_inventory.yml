@@ -41,7 +41,7 @@
     - name: Add host to the Group
       ansible.controller.group:
         name: "{{ target_group }}"
-        inventory: "AWS"
+        inventory: "AWS Inventory"
         hosts:
           - "{{ found_public_dns }}"
         state: present  
