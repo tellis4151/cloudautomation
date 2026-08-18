@@ -14,6 +14,7 @@
         volume_id: "{{ volume_id }}"
         region: "{{ aws_region }}"
         description: "Simple automated snapshot"
+        wait: false
       register: snapshot_info
 
     - name: Show created snapshot ID
