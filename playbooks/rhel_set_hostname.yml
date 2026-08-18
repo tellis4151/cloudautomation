@@ -1,0 +1,9 @@
+---
+- name: Set Hostname on RHEL Server
+  hosts: rhel_servers
+  become: true
+
+  tasks:
+  - name: Set static hostname
+    ansible.builtin.hostname:
+      name: "{{ target_hostname }}"
