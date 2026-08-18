@@ -1,7 +1,7 @@
 ---
 - name: Gather Information from Order Processing System
   tags: facts
-  hosts: webservers
+  hosts: rhel_servers
 
   tasks:
   - name: Gather Facts
