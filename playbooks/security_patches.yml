@@ -6,13 +6,8 @@
 
   tasks:
     - name: Register system
-      community.general.redhat_subscription:
-        state: present
-        username: "{{ username }}"
-        password: "{{ password }}"
-        auto_attach: true
+      ansible.builtin.command: subscription-manager register --username="{{ username }}" --password="{{ password }}" --auto-attach
       register: registration_output
-
 
     - name: Update security packages 
       dnf:
