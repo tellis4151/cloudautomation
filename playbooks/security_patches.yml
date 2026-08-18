@@ -6,7 +6,7 @@
 
   tasks:
     - name: Register system
-      ansible.builtin.command: subscription-manager register --username="{{ username }}" --password="{{ password }}" --auto-attach
+      ansible.builtin.command: subscription-manager register --username="{{ username }}" --password="{{ password }}"
       register: registration_output
 
     - name: Update security packages 
