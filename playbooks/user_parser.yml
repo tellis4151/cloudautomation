@@ -11,7 +11,7 @@
   tasks:
     - name: Set the formatted users string as a fact
       ansible.builtin.set_fact:
-        formatted_users: "{{ users | map('regex_replace', '^(.*)$', '"\1"') | join(' & CHAR(10) & ') }}
+        formatted_users: "{{ users | map('regex_replace', '^(.*)$', '"\1"') | join(' & CHAR(10) & ') }}"
 
     - name: Display the formatted user fact
       ansible.builtin.debug:
