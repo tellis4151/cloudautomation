@@ -1,0 +1,18 @@
+---
+- name: Set formatted user list as a fact and display
+  hosts: localhost
+  gather_facts: false
+  vars:
+    users:
+      - bob
+      - sally
+      - joe
+
+  tasks:
+    - name: Set the formatted users string as a fact
+      ansible.builtin.set_fact:
+        formatted_users: "{{ users | map('format', '\"%s\"') | join(' & CHAR(10) & ') }}"
+
+    - name: Display the formatted user fact
+      ansible.builtin.debug:
+        msg: "{{ formatted_users }}"
