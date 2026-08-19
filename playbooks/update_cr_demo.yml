@@ -19,14 +19,11 @@
       var: results
 
   - name: Update task
-    servicenow.itsm.change_request_task:
+    servicenow.itsm.change_request:
       change_request_number: "{{ results.records[0].number }}"
 #      change_request_number: "{{ change_number }}"
       type: implementation
-      state: pending
-      assigned_to: Troy Ellis
-      assignment_group: Network
-      short_description: Configure new servers
-      description: "Install Security Patches, Register System, Install applicaton sofware, Enable FIPS"
-      on_hold: true
-      hold_reason: "Configuration applied by Ansible had an error"
+      state: work_in_progress
+      other:
+        work_notes: "Automated execution by AAP failed, please review the workflow"
+    register: updated_cr
