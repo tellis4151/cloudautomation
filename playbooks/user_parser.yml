@@ -15,4 +15,4 @@
 
     - name: Display the formatted user fact
       ansible.builtin.debug:
-        msg: "{{ logged_in_users }}"
+        var: formatted_users
