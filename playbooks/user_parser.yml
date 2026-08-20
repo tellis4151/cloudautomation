@@ -1,19 +1,18 @@
 ---
 - name: Set formatted user list as a fact and display
-  hosts: localhost
+  hosts: webservers
   gather_facts: false
-  vars:
-    users:
-      - bob
-      - sally
-      - joe
 
   tasks:
+    - name: Get non-root logged-in users
+      ansible.builtin.shell: "who | awk '{print $1}' | sort | uniq | grep -v '^root$'"
+      register: logged_in_users
+
     - name: Set the formatted users string as a fact
       ansible.builtin.set_fact:
         formatted_users: >-
-          {{ users | map('regex_replace', '^(.*)$', '"\1"') | join(' & CHAR(10) & ') }} & CHAR(10)
+          {{ logged_in_users.stdout_lines | map('regex_replace', '^(.*)$', '"\1"') | join(' & CHAR(10) & ') }} & CHAR(10)
 
     - name: Display the formatted user fact
       ansible.builtin.debug:
-        msg: "{{ formatted_users }}"
+        msg: "{{ logged_in_users }}"
