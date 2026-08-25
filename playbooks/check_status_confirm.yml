@@ -6,4 +6,4 @@
   tasks:
   - name: Poll order system
     ansible.builtin.uri:
-      url: http://52.7.115.166:8080/confirmation.html
+      url: http://3.83.223.150:8080/confirmation.html
