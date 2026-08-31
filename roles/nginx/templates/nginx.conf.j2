@@ -1,9 +1,52 @@
-server {
-    listen {{ nginx_port }};
-    listen [::]:{{ nginx_port }};
+# templates/nginx.conf.j2
+user {{ nginx_user | default('www-data') }};
+worker_processes {{ nginx_worker_processes | default('auto') }};
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
 
-    location / {
-        root /var/www/html;
-        index index.html;
+events {
+    worker_connections {{ nginx_worker_connections | default(1024) }};
+    multi_accept on;
+}
+
+http {
+    # Basic Settings
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout {{ nginx_keepalive_timeout | default(65) }};
+    types_hash_max_size 2048;
+    server_tokens {{ nginx_server_tokens | default('off') }};
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # Logging Settings
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    # Gzip Compression
+    gzip on;
+    gzip_disable "msie6";
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+    # Main Virtual Host
+    server {
+        listen       {{ nginx_port | default(80) }} default_server;
+        listen       [::]:{{ nginx_port | default(80) }} default_server;
+        server_name  {{ nginx_server_name | default('_') }};
+        root         {{ nginx_document_root | default('/var/www/html') }};
+
+        index index.html index.htm;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+
+        # Additional configuration files
+        include /etc/nginx/conf.d/*.conf;
     }
 }
