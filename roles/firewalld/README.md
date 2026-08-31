@@ -24,7 +24,7 @@ nginx_ports: ['80/tcp', '443/tcp'] - Ports to allow explicitly
 
 ## Depedencies
 
-* **None**
+**None**
 
 ## Example Playbook
 ---
@@ -32,4 +32,4 @@ nginx_ports: ['80/tcp', '443/tcp'] - Ports to allow explicitly
   hosts: webservers
   become: true
   roles:
-    - role: nginx_firewall
+    - role: firewalld
