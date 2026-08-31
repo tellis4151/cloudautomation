@@ -4,19 +4,26 @@
     name: nginx
     state: present
 
+- name: Deploy Nginx configuration template
+  ansible.builtin.template:
+    src: templates/nginx/nginx.conf
+    dest: /etc/nginx/nginx/conf
+    mode: '0644'
+
 - name: Backup existing index.html file
-  copy:
+  ansible.builtin.copy:
     src: /usr/share/nginx/html/index.html
     dest: /tmp/index.html.orig
     remote_src: true
   
 - name: Copy index.html to Nginx directory
-  copy:
+  ansible.builtin.copy:
     src: files/index.html
     dest: /usr/share/nginx/html/index.html
+  notify: Restart Nginx
 
 - name: Ensure nginx is runnning
-  systemd:
+  ansible.builtin.service:
     name: nginx
     state: started
-    enabled: yes
+    enabled: true
