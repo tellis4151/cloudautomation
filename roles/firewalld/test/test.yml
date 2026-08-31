@@ -1,0 +1,16 @@
+---
+- name: Test nginx_firewall role installation and configuration
+  hosts: webservers
+  become: true
+
+  vars:
+    firewalld_zone: public
+    firewalld_services:
+      - http
+      - https
+    nginx_ports:
+      - "80/tcp"
+      - "443/tcp"
+
+  roles:
+    - firewalld

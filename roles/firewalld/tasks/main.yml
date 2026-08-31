@@ -1,0 +1,39 @@
+---
+- name: Install Nginx and Firewalld
+  ansible.builtin.dnf:
+    name:
+      - firewalld
+      - python3-firewall
+    state: present
+
+- name: Ensure Firewalld is running and enabled
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Ensure Nginx is running and enabled
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Allow HTTP and HTTPS services in Firewalld
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    zone: "{{ firewalld_zone }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ firewalld_services }}"
+  notify: Restart firewalld
+
+- name: Allow ports 80/tcp and 443/tcp explicitly in Firewalld
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    zone: "{{ firewalld_zone }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  loop: "{{ nginx_ports }}"
+  notify: Restart firewalld

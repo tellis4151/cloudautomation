@@ -1,0 +1,29 @@
+# roles/nginx_firewall/meta/main.yml
+---
+galaxy_info:
+  author: Infrastructure Operations
+  description: Installs and Configures Firewalld, enabling HTTP and HTTPS service access.
+  company: TELLIS CORP
+
+  license: Red Hat
+
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: EL
+      versions:
+        - "8"
+        - "9"
+    - name: Red Hat
+      versions:
+        - all
+
+  galaxy_tags:
+    - nginx
+    - firewalld
+    - security
+    - web
+    - http
+    - https
+
+dependencies: []

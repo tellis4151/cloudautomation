@@ -1,0 +1,8 @@
+---
+nginx_ports:
+  - "80/tcp"
+  - "443/tcp"
+firewalld_zone: public
+firewalld_services:
+  - http
+  - https
