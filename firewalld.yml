@@ -1,0 +1,6 @@
+- name: Deploy Firewalld Configuration for Nginx
+  hosts: webservers
+  become: true
+  roles:
+    - role: firewalld
+
