@@ -28,9 +28,12 @@ ansible-galaxy collection install ansible.posix
 **None**
 
 ## Example Playbook
+
+```yaml
 ---
 - name: Configure Web Servers
   hosts: webservers
   become: true
   roles:
     - role: firewalld
+```
