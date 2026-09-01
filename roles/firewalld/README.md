@@ -13,10 +13,11 @@ To install the required collection:
 ansible-galaxy collection install ansible.posix
 ```
 ## Role Variables
-Variable, Default, and Description 
-firewalld_zone: public - The firewalld zone to apply rules to
-firewalld_services: ['http', 'https'] - Firewall service names to allow
-nginx_ports: ['80/tcp', '443/tcp'] - Ports to allow explicitly
+| Variable | Default | Description |
+| ---  |  ---  |  ---  |
+| `firewalld_zone` | `public` | The firewalld zone to apply rules to |
+| `firewalld_services` |`['http', 'https']` | Firewall service names to allow |
+| `nginx_ports` | `['80/tcp', '443/tcp']` | Ports to allow explicitly |
 
 ## Handlers
 
