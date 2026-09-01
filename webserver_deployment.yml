@@ -1,0 +1,8 @@
+---
+- name: Install & Configure Nginx and Firewalld
+  hosts: webservers
+  become: true
+
+  roles:
+    - nginx
+    - firewalld 
