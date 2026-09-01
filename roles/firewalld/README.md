@@ -21,7 +21,7 @@ ansible-galaxy collection install ansible.posix
 
 ## Handlers
 
-* Restart firewalld: Triggered whenever changes are made to allowed services or ports
+Restart firewalld: Triggered whenever changes are made to allowed services or ports
 
 ## Depedencies
 
