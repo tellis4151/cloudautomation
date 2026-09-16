@@ -4,7 +4,7 @@
   gather_facts: false
 
   tasks:
-  - name: Create Change Request Provision New RHEL Server
+  - name: Create Change Request - Provision New RHEL Server
     servicenow.itsm.change_request:
 #      instance: 
 #        host: "{{ host }}"
@@ -12,7 +12,7 @@
 #        password: "{{ password }}"
       type: standard
       state: new
-      short_description: Provision New RHEL VM
+      short_description: Provision New RHEL Server
       description: Provision Server Workflow
       priority: moderate
       category: network

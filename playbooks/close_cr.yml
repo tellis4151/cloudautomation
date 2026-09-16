@@ -11,7 +11,7 @@
 #        username: "{{ username }}"
 #        password: "{{ password }}"
       query:
-        - short_description: LIKE Provision New RHEL VM
+        - short_description: LIKE Provision New RHEL Server
     register: results
 
   - name: Print out CR Info
