@@ -6,4 +6,4 @@
   tasks:
   - name: Set static hostname
     ansible.builtin.hostname:
-      name: "{{ target_hostname }}"
+      name: "{{ name }}"
