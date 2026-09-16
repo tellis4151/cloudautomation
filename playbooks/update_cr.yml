@@ -4,17 +4,17 @@
   gather_facts: false
 
   tasks:
-  - name: Create Order System Incident
+  - name: Update Server Provisioning Change Request
     servicenow.itsm.change_request_info:
       instance: 
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
       query:
-        - short_description: LIKE Install Arista Cloud Router
+        - short_description: LIKE Provision New RHEL Server
     register: results
 
-  - name: Print out Incident info 
+  - name: Print out Change Request
     debug:
       var: results
 
@@ -25,7 +25,7 @@
       state: pending
       assigned_to: Troy Ellis
       assignment_group: Network
-      short_description: Applying Arista Configurations
-      description: "Provisioning Arista Cloud Router"
+      short_description: Provision New RHEL Server
+      description: "Provision Server Workflow"
       on_hold: true
       hold_reason: "Configuration applied by Ansible had an error"
