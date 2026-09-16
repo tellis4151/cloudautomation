@@ -25,13 +25,13 @@
       amazon.aws.ec2_instance_info:
         region: "{{ aws_region }}"
         filters:
-          "tag:Name": "{{ target_instance_name }}"
+          "tag:Name": "{{ name }}"
           instance-state-name: [ "running" ]
       register: ec2_search
 
     - name: Fail if instance not found
       ansible.builtin.fail:
-        msg: "No running instance found with name: {{ target_instance_name }}"
+        msg: "No running instance found with name: {{ name }}"
       when: ec2_search.instances | length == 0
 
     - name: Extract Instance ID
