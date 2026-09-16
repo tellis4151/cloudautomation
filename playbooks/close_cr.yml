@@ -11,10 +11,10 @@
 #        username: "{{ username }}"
 #        password: "{{ password }}"
       query:
-        - short_description: LIKE Provision VMWare RHEL VM
+        - short_description: LIKE Provision New RHEL VM
     register: results
 
-  - name: Print out Incident info 
+  - name: Print out CR Info
     debug:
       var: results
 
@@ -55,7 +55,7 @@
 #        username: "{{ username }}"
 #        password: "{{ password }}"
       close_code: "successful"
-      close_notes: "Successfully provisioned VMWare VM via Ansible Automation Platform Workflow.  System hostname has been set, system is registered, and security packages installed."
+      close_notes: "Successfully provisioned New Server via Ansible Automation Platform Workflow.  System hostname has been set, system is registered, security packages installed, FIPS 140 is enabled."
       state: closed
       number: "{{ results.records[0].number }}"
       assignment_group: Network
