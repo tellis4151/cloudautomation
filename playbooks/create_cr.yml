@@ -4,7 +4,7 @@
   gather_facts: false
 
   tasks:
-  - name: Create Change Request Provision VMWare VMs
+  - name: Create Change Request Provision New RHEL Server
     servicenow.itsm.change_request:
 #      instance: 
 #        host: "{{ host }}"
