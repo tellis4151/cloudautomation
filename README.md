@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Active](https://img.shields.io/badge/Status-Active-success.svg)]()
 
-A robust suite of scripts, tools, and configurations designed to automate cloud infrastructure provisioning, management, and continuous operations.
+A robust suite of scripts, tools, and configurations designed to automate cloud infrastructure provisioning, management, and continuous operations using Ansible Automation Platform.
 
 ---
 
@@ -25,7 +25,7 @@ A robust suite of scripts, tools, and configurations designed to automate cloud 
 ## 📁 Repository Structure
 
 ```text
-├── .github/workflows/    # CI/CD pipelines and automation actions
-├── scripts/              # Utility and execution scripts
-├── configs/              # Configuration files and templates
+├── inventories           # Inventory Source Plugins, example - ServiceNow
+├── playbooks/            # Ansible Playbooks
+├── roles  /              # Ansible Roles
 └── README.md             # Project documentation
