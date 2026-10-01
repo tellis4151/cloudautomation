@@ -18,7 +18,7 @@ A robust suite of scripts, tools, and configurations designed to automate cloud 
 - **Infrastructure as Code (IaC):** Modular and repeatable cloud resource configurations.
 - **Automated Workflows:** Streamlined pipelines for provisioning and scaling infrastructure.
 - **Resource Management:** Scripts to audit, monitor, and clean up cloud environments.
-- **Best Practices:** Designed with security, reliability, and cost-efficiency in mind.
+- **Best Practices:** Designed with security, reliability, and efficiency in mind.
 
 ---
 
