@@ -1,6 +1,6 @@
 ---
 - name: Install LAMP Stack
-  hosts: rhel10
+  hosts: appservers
   tasks:
     - name: Install Apache
       ansible.builtin.package:
