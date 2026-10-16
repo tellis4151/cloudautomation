@@ -1,0 +1,88 @@
+---
+- name: Audit and Report 3rd-Party Packages on RHEL Servers
+  hosts: rhel_servers
+  become: true
+  gather_facts: true
+  
+  vars:
+    # Vendors considered official/first-party
+    trusted_vendors:
+      - "Red Hat, Inc."
+
+    # Destination directory for the consolidated report on the AAP Execution Node
+    report_output_dir: "/tmp/reports"
+    report_file_name: "third_party_packages_{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}.csv"
+
+  tasks:
+    - name: Query installed RPMs with vendor metadata
+      ansible.builtin.command:
+        cmd: >-
+          rpm -qa --queryformat '%{NAME}|%{VERSION}-%{RELEASE}|%{ARCH}|%{VENDOR}|%{PACKAGER}|%{INSTALLTIME:date}\n'
+      register: rpm_query_raw
+      changed_when: false
+      check_mode: false
+
+    - name: Parse and isolate 3rd-party packages
+      ansible.builtin.set_fact:
+        third_party_packages: >-
+          {%- set non_rh = [] -%}
+          {%- for line in rpm_query_raw.stdout_lines -%}
+            {%- set parts = line.split('|') -%}
+            {%- if parts | length >= 6 -%}
+              {%- set name = parts[0] -%}
+              {%- set vendor = parts[3] -%}
+              {# Ignore gpg-pubkeys and packages matching trusted vendors #}
+              {%- if name != 'gpg-pubkey' and vendor not in trusted_vendors -%}
+                {%- set _ = non_rh.append({
+                      'host': inventory_hostname,
+                      'name': parts[0],
+                      'version_release': parts[1],
+                      'arch': parts[2],
+                      'vendor': parts[3] if parts[3] != '(none)' else 'Unspecified/Internal',
+                      'packager': parts[4],
+                      'install_date': parts[5]
+                    }) -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ non_rh }}
+
+    - name: Display detected 3rd-party packages in job output
+      ansible.builtin.debug:
+        msg: >-
+          Found {{ third_party_packages | length }} third-party package(s) on {{ inventory_hostname }}:
+          {{ third_party_packages | map(attribute='name') | list }}
+
+    - name: Expose per-host metrics to AAP Automation Controller
+      ansible.builtin.set_stats:
+        data:
+          third_party_package_count: "{{ third_party_packages | length }}"
+        per_host: true
+
+    - name: Ensure reporting directory exists on Execution Node
+      ansible.builtin.file:
+        path: "{{ report_output_dir }}"
+        state: directory
+        mode: "0755"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Generate consolidated CSV report across all target hosts
+      ansible.builtin.copy:
+        dest: "{{ report_output_dir }}/{{ report_file_name }}"
+        mode: "0644"
+        content: |
+          Host,Package Name,Version-Release,Architecture,Vendor,Packager,Install Date
+          {% for host in ansible_play_hosts %}
+          {% for pkg in hostvars[host].third_party_packages | default([]) %}
+          "{{ pkg.host }}","{{ pkg.name }}","{{ pkg.version_release }}","{{ pkg.arch }}","{{ pkg.vendor }}","{{ pkg.packager }}","{{ pkg.install_date }}"
+          {% endfor %}
+          {% endfor %}
+      delegate_to: localhost
+      run_once: true
+
+    - name: Summarize report location in controller logs
+      ansible.builtin.debug:
+        msg: "Audit complete. Consolidated CSV written to {{ report_output_dir }}/{{ report_file_name }}"
+      delegate_to: localhost
+      run_once: true
