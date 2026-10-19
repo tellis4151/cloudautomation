@@ -1,0 +1,119 @@
+---
+- name: Audit Third-Party and Flagged Red Hat Packages on RHEL
+  hosts: all
+  gather_facts: true
+  vars:
+    # 1. Official vendor whitelist
+    trusted_vendors:
+      - "Red Hat, Inc."
+
+    # 2. Watchlist regex patterns for Red Hat signed packages (desktop/GUI/unapproved client tools)
+    flagged_rh_package_patterns:
+      - '^firefox'
+      - '^libreoffice'
+      - '^thunderbird'
+      - '^gimp'
+      - '^evince'
+      - '^wireshark'
+      - '^totem'
+
+    # Compiled regex pattern joining the watchlist
+    flagged_rh_regex: "{{ flagged_rh_package_patterns | join('|') }}"
+
+    # Destination directory for the consolidated report on the AAP Execution Node
+    report_output_dir: "/tmp/reports"
+    report_file_name: "installed_audit_{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}.csv"
+
+  tasks:
+    - name: Query installed RPMs with metadata
+      ansible.builtin.command:
+        cmd: >-
+          rpm -qa --queryformat '%{NAME}|%{VERSION}-%{RELEASE}|%{ARCH}|%{VENDOR}|%{PACKAGER}|%{INSTALLTIME:date}\n'
+      register: rpm_query_raw
+      changed_when: false
+      check_mode: false
+
+    - name: Parse and classify non-standard packages
+      ansible.builtin.set_fact:
+        audited_packages: >-
+          {%- set results = [] -%}
+          {%- for line in rpm_query_raw.stdout_lines -%}
+            {%- set parts = line.split('|') -%}
+            {%- if parts | length >= 6 -%}
+              {%- set name = parts[0] -%}
+              {%- set evr = parts[1] -%}
+              {%- set arch = parts[2] -%}
+              {%- set vendor = parts[3] -%}
+              {%- set packager = parts[4] -%}
+              {%- set install_date = parts[5] -%}
+
+              {# Ignore GPG public keys stored as pseudo-RPMs #}
+              {%- if name != 'gpg-pubkey' -%}
+                {%- set is_third_party = vendor not in trusted_vendors -%}
+                {%- set is_flagged_rh = (vendor in trusted_vendors) and (name | regex_search(flagged_rh_regex)) -%}
+
+                {%- if is_third_party or is_flagged_rh -%}
+                  {%- set category = 'Third-Party Vendor' if is_third_party else 'Flagged Red Hat Application' -%}
+                  {%- set clean_vendor = vendor if vendor != '(none)' else 'Unspecified/Internal' -%}
+                  {%- set _ = results.append({
+                        'host': inventory_hostname,
+                        'name': name,
+                        'version_release': evr,
+                        'arch': arch,
+                        'vendor': clean_vendor,
+                        'packager': packager,
+                        'install_date': install_date,
+                        'category': category
+                      }) -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ results }}
+
+    - name: Isolate counts for reporting
+      ansible.builtin.set_fact:
+        third_party_count: "{{ audited_packages | selectattr('category', 'equalto', 'Third-Party Vendor') | list | length }}"
+        flagged_rh_count: "{{ audited_packages | selectattr('category', 'equalto', 'Flagged Red Hat Application') | list | length }}"
+
+    - name: Display audit summary in AAP job console
+      ansible.builtin.debug:
+        msg: >-
+          Host {{ inventory_hostname }} has {{ audited_packages | length }} flagged items 
+          ({{ third_party_count }} third-party, {{ flagged_rh_count }} restricted Red Hat packages).
+
+    - name: Publish host audit metrics to AAP Controller
+      ansible.builtin.set_stats:
+        data:
+          third_party_package_count: "{{ third_party_count }}"
+          flagged_rh_package_count: "{{ flagged_rh_count }}"
+          total_flagged_count: "{{ audited_packages | length }}"
+        per_host: true
+
+    - name: Ensure reporting directory exists on Execution Node
+      ansible.builtin.file:
+        path: "{{ report_output_dir }}"
+        state: directory
+        mode: "0755"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Write consolidated audit CSV across all target hosts
+      ansible.builtin.copy:
+        dest: "{{ report_output_dir }}/{{ report_file_name }}"
+        mode: "0644"
+        content: |
+          Host,Category,Package Name,Version-Release,Architecture,Vendor,Packager,Install Date
+          {% for host in ansible_play_hosts %}
+          {% for pkg in hostvars[host].audited_packages | default([]) %}
+          "{{ pkg.host }}","{{ pkg.category }}","{{ pkg.name }}","{{ pkg.version_release }}","{{ pkg.arch }}","{{ pkg.vendor }}","{{ pkg.packager }}","{{ pkg.install_date }}"
+          {% endfor %}
+          {% endfor %}
+      delegate_to: localhost
+      run_once: true
+
+    - name: Log report completion details
+      ansible.builtin.debug:
+        msg: "Audit complete. Consolidated CSV output: {{ report_output_dir }}/{{ report_file_name }}"
+      delegate_to: localhost
+      run_once: true
