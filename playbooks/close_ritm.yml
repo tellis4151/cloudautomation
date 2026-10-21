@@ -1,0 +1,54 @@
+---
+- name: Query and Close RITMs by Short Description
+  hosts: localhost
+  gather_facts: false
+  vars:
+    # Target search string (passed via AAP Survey / extra_vars / defined here)
+    target_short_description: "Decommission Server"
+    
+    # Matching type: Use 'LIKE' for partial match / contains, or '=' for exact match
+    match_operator: "LIKE"
+
+  tasks:
+    - name: Query open RITMs matching the short description
+      servicenow.itsm.api_info:
+        resource: sc_req_item
+        sysparm_query: "short_description{{ match_operator }}{{ target_short_description }}^stateNOT IN3,4,7"
+        columns:
+          - sys_id
+          - number
+          - short_description
+          - state
+      register: matching_ritms
+
+    - name: Display discovery results
+      ansible.builtin.debug:
+        msg: >
+          Found {{ matching_ritms.records | length if matching_ritms.records is defined else 0 }} 
+          open RITM(s) matching '{{ target_short_description }}'.
+
+    - name: Close all matching RITMs
+      servicenow.itsm.api:
+        resource: sc_req_item
+        action: patch
+        sys_id: "{{ item.sys_id }}"
+        data:
+          state: "3"            # 3 = Closed Complete
+          stage: "complete"     # Sets fulfillment stage to Complete
+          work_notes: "Closed by Ansible Automation Platform batch remediation."
+          close_notes: "Task fulfilled and verified by automated workflow."
+      loop: "{{ matching_ritms.records | default([]) }}"
+      loop_control:
+        label: "{{ item.number }} ({{ item.short_description }})"
+      when:
+        - matching_ritms.records is defined
+        - matching_ritms.records | length > 0
+      register: close_results
+
+    - name: Report closed tickets
+      ansible.builtin.debug:
+        msg: "Successfully closed {{ item.record.number }}."
+      loop: "{{ close_results.results | default([]) }}"
+      loop_control:
+        label: "{{ item.record.number | default('skipped') }}"
+      when: item.changed | default(false)
