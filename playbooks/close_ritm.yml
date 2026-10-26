@@ -1,5 +1,5 @@
 ---
-- name: Query and Close RITMs by Short Description
+- name: Query and Close RITMs by Description
   hosts: localhost
   gather_facts: false
   vars:
