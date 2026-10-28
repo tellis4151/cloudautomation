@@ -1,0 +1,13 @@
+---
+- name: Test Playbook
+  hosts: rhel_servers
+  gather_facts: false
+
+  tasks:
+    - name: nslookup server IP
+      ansible.builtin.command: "nslookup {{ ip }}"
+      register: authserver_name
+
+    - name: Split auth server name
+      ansible.builtin.set_fact:
+        authserver_split: "{{ authserver_name.stdout_lines[0].split('=') }}"
