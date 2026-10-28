@@ -8,6 +8,10 @@
       ansible.builtin.command: "nslookup {{ ip }}"
       register: authserver_name
 
-    - name: Split auth server name
+    - name: Split auth server name into a list
       ansible.builtin.set_fact:
-        authserver_split: "{{ authserver_name.stdout_lines[0].split('=') }}"
+        authserver_split: "{{ (authserver_name.stdout_lines | select('search', '=') | first).split('=') | map('trim') | list }}"
+
+    - name: Verify list output
+      ansible.builtin.debug:
+        var: authserver_split
