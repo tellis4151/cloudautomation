@@ -64,7 +64,6 @@
         path: "{{ report_output_dir }}"
         state: directory
         mode: "0755"
-      delegate_to: localhost
       run_once: true
 
     - name: Generate consolidated CSV report across all target hosts
@@ -78,11 +77,9 @@
           "{{ pkg.host }}","{{ pkg.name }}","{{ pkg.version_release }}","{{ pkg.arch }}","{{ pkg.vendor }}","{{ pkg.packager }}","{{ pkg.install_date }}"
           {% endfor %}
           {% endfor %}
-      delegate_to: localhost
       run_once: true
 
     - name: Summarize report location in controller logs
       ansible.builtin.debug:
         msg: "Audit complete. Consolidated CSV written to {{ report_output_dir }}/{{ report_file_name }}"
-      delegate_to: localhost
       run_once: true
